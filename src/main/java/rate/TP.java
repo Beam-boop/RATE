@@ -39,12 +39,12 @@ public class TP {
     public int vel;
     private static final int NUMBER = 111000;
     String pathItem = null;
-    private BigInteger eVel;
+    public BigInteger eVel;
 
     public TP() {
         taskTime = 600;
         vel = 11;
-        pathItem = "";
+        pathItem = "res/T-Drive/T-Drive-4.csv";
     }
 
     /**
@@ -55,8 +55,7 @@ public class TP {
      */
     private void encryptInformation() throws ExecutionException, InterruptedException {
         //KGC send the paillier to TR
-        KGC kgc = new KGC();
-        pai = kgc.getPai();
+        pai = TR.getPai();
 
         eVel = pai.encrypt(BigInteger.valueOf(vel));
 

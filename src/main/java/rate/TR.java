@@ -1,6 +1,8 @@
 package rate;
 
 import utils.sg.smu.securecom.protocol.Paillier;
+import utils.sg.smu.securecom.protocol.PaillierThdDec;
+import utils.sg.smu.securecom.utils.Keys;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,6 +16,7 @@ import java.util.List;
  * Author:wbGuo
  * Date: 2023/7/14
  * Task requester: send the encrypted task location, budget and task time to cp.
+ * generate the private key and public key. and send them to the related entities.
  */
 public class TR {
     /**
@@ -35,13 +38,14 @@ public class TR {
      */
     public int taskTime;
     protected String pathInfo;
-
     /**
      * the encrypted location of task
      */
     protected BigInteger[] eTaskLoc = new BigInteger[2];
-
     private static final int NUMBER = 111000;
+    //512\768\1024\1280\1536
+    private static final int keyLen = 128;
+    private static Keys key = new Keys(keyLen);
 
     /**
      * when you use this class, you can modify the TR to update the information, such as budget, taskTime and pathInfo.
@@ -51,7 +55,18 @@ public class TR {
         taskTime = 100;
         pathInfo = "res/T-Drive/T-Drive-4-info.csv";
     }
-
+    //to  encrypt
+    public static Paillier getPai(){
+        return key.pai;
+    }
+    //send to cp
+    public static PaillierThdDec getCp(){
+        return key.cp;
+    }
+    //send to csp
+    public static PaillierThdDec getCsp(){
+        return key.csp;
+    }
     /**
      * read data to form pattern
      */
@@ -78,8 +93,6 @@ public class TR {
      */
     private void encryptInformation() {
         //KGC send the paillier to TR
-        KGC kgc = new KGC();
-        pai = kgc.getPai();
 
         int c = (int) Math.round(taskLoc.get(0) * NUMBER);
         int d = (int) Math.round(taskLoc.get(1) * NUMBER);

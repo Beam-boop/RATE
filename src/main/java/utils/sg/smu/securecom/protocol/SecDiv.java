@@ -35,8 +35,8 @@ public class SecDiv {
 
     public static void main(String[] args) {
 
-        int SIGMA = 80;//118;
-        int key_len = 256;
+        int SIGMA = 128;//118;
+        int key_len = 128;
         User user = new User(key_len);
         BigInteger precision = BigInteger.valueOf(2).pow(106);
 
