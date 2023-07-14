@@ -36,7 +36,8 @@ public class TR {
     /**
      * the time of whole task.
      */
-    public int taskTime;
+    private int taskTime = 0;
+    public BigInteger eTaskTime;
     protected String pathInfo;
     /**
      * the encrypted location of task
@@ -92,7 +93,7 @@ public class TR {
      * one longitude = 111km = 111000m
      */
     private void encryptInformation() {
-        //KGC send the paillier to TR
+        eTaskTime = pai.encrypt(BigInteger.valueOf(taskTime));
 
         int c = (int) Math.round(taskLoc.get(0) * NUMBER);
         int d = (int) Math.round(taskLoc.get(1) * NUMBER);

@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07594db0-94f5-4427-b2e0-44226596cf8e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/utils/Good.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rate/CpCsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/CpCsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rate/KGC.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rate/TP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/TP.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rate/TR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/TR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecAbs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecAbs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecCmp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecCmp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +55,8 @@
       <recent name="E:\SC-xidian\SC-Beam\RATE\src\main\java" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="utils.sg.smu.securecom.utils" />
+      <recent name="rate" />
       <recent name="Utils" />
     </key>
   </component>
@@ -113,7 +113,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1689295154672</updated>
-      <workItem from="1689295157252" duration="14098000" />
+      <workItem from="1689295157252" duration="19453000" />
     </task>
     <servers />
   </component>

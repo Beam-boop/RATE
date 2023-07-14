@@ -34,15 +34,12 @@ public class TP {
      * the encrypted location of enter system
      */
     protected List<List<BigInteger>> eStartLocs = new ArrayList<>();
-
-    public int taskTime;
-    public int vel;
+    private int vel;
     private static final int NUMBER = 111000;
     String pathItem = null;
     public BigInteger eVel;
 
     public TP() {
-        taskTime = 600;
         vel = 11;
         pathItem = "res/T-Drive/T-Drive-4.csv";
     }
@@ -95,6 +92,10 @@ public class TP {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public BigInteger getEcv(BigInteger c){
+        return pai.encrypt(c.divide(BigInteger.valueOf(vel)));
     }
 
     public List<List<BigInteger>> getEncStartLocs() throws ExecutionException, InterruptedException {
