@@ -45,16 +45,20 @@ public class TaskRequester {
     protected BigInteger[] eTaskLoc = new BigInteger[2];
     private static final int NUMBER = 111000;
     //512\768\1024\1280\1536
-    private static final int keyLen = 128;
-    private static Keys key = new Keys(keyLen);
+//    private static final int keyLen = 128;
+    private static Keys key;
 
-    public TaskRequester(){
+    public TaskRequester() {
 
     }
+
     /**
-     * when you use this class, you can modify the TaskRequester to update the information, such as budget, taskTime and pathInfo.
+     * when you use this class, you can modify the TaskRequester to
+     * update the information, such as budget, taskTime and pathInfo.
      */
-    public TaskRequester(int b, int t, String p) {
+    public TaskRequester(int b, int t, int k, String p) {
+        key = new Keys(k);
+        System.out.println("keyLen is: " + k);
         budget = b;
         taskTime = t;
         pathInfo = p;
@@ -63,18 +67,22 @@ public class TaskRequester {
         readData();
         encryptInformation();
     }
+
     //to  encrypt
-    public static Paillier getPai(){
+    public static Paillier getPai() {
         return key.pai;
     }
+
     //send to cp
-    public static PaillierThdDec getCp(){
+    public static PaillierThdDec getCp() {
         return key.cp;
     }
+
     //send to csp
-    public static PaillierThdDec getCsp(){
+    public static PaillierThdDec getCsp() {
         return key.csp;
     }
+
     /**
      * read data to form pattern
      */

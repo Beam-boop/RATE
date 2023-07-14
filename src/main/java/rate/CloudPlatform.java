@@ -66,7 +66,8 @@ public class CloudPlatform {
 
         alpha = a;
         beta = b;
-
+        System.out.println("alpha is: " + a);
+        System.out.println("beta is: " + b);
         secCmpRandom();
     }
 
@@ -114,6 +115,8 @@ public class CloudPlatform {
             goods.add(new Good((serviceTimes * alpha), (serviceTimes * beta)));
         }
         numOfThings = goods.size();
+        System.out.println("number of TPs " + numOfThings);
+        System.out.println("budget of task " + capOfPack);
         dp = new int[numOfThings + 1][capOfPack + 1];
     }
 
@@ -196,7 +199,7 @@ public class CloudPlatform {
     public void solve() throws ExecutionException, InterruptedException {
         calculateServiceTime();
         int trBenefit = dpCalculate();
-        System.out.println("TRs benefit is :" + trBenefit);
+        System.out.println("TR benefit is :" + trBenefit);
         chooseItems();
     }
 }

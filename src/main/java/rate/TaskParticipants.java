@@ -45,6 +45,7 @@ public class TaskParticipants {
 
     public TaskParticipants(int v, String p) throws ExecutionException, InterruptedException {
         vel = v;
+        System.out.println("vel is: "+ vel);
         pathItem = p;
 
         readData();
