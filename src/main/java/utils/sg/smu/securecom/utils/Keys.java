@@ -20,10 +20,10 @@ public class Keys {
 	protected static int sigma = 80;
 	
 	protected PaillierPrivateKey prikey = null;
-	protected Paillier pai = null;
+	public Paillier pai = null;
 	protected PaillierThdPrivateKey[] ThdKey = null;
-	protected PaillierThdDec cp = null;
-	protected PaillierThdDec csp = null;
+	public PaillierThdDec cp = null;
+	public PaillierThdDec csp = null;
 	
 	public Keys(int len) {
 
