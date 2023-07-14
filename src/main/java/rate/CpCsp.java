@@ -25,8 +25,6 @@ public class CpCsp {
     private static final int SIGMA = 128;//118;
     //receive the task position
     protected BigInteger[] eTaskLoc = null;
-    //receive the budget
-    protected int budget = 0;
     //receive the taskTime
     protected BigInteger eTaskTime = null;
     //receive the TPs current position
@@ -35,8 +33,15 @@ public class CpCsp {
     protected BigInteger eVel = null;
     public List<BigInteger> eServeTimes = new ArrayList<>();
     ArrayList<Good> goods;
-    public int alpha;
-    public int beta;
+    protected int alpha;
+    protected int beta;
+    protected int numOfThings;
+    //receive the budget
+    protected int capOfPack;
+    /**
+     * dynamic programming array
+     */
+    int[][] dp;
     //offline
     public HashMap<String, BigInteger> randomRestore = new HashMap<String, BigInteger>();
     //receive the sk1 and sk2
@@ -48,16 +53,18 @@ public class CpCsp {
     TP tp = new TP();
 
     public CpCsp() throws ExecutionException, InterruptedException {
-        budget = tr.budget;
+        capOfPack = tr.budget;
         eTaskTime = tr.eTaskTime;
         eTaskLoc = tr.getETaskLoc();
 
         eStartLocs = tp.getEncStartLocs();
+        numOfThings = eStartLocs.size();
         eVel = tp.eVel;
         goods = new ArrayList<>();
 
         alpha = 1;
         beta = 1;
+        dp = new int[numOfThings + 1][capOfPack + 1];
         secCmpRandom();
     }
 
@@ -129,4 +136,58 @@ public class CpCsp {
         randomRestore.put("emulr1", emulr1);
         randomRestore.put("emulr2", emulr2);
     }
+
+    /**
+     * Dynamic programming solves the 0-1 knapsack problem
+     * in plaint text
+     *
+     * @return dp Array
+     */
+    public int dpCalculate() {
+//        for (int i = 0; i < numOfThings; i++) {
+//            int w = goods.get(i).weight, v = goods.get(i).value;
+//            for (int j = capOfPack; j >= w; j--) {
+//                int temp = dp[j - w] + v;
+//                if (temp > dp[j]) {
+//                    dp[j] = temp;
+//                }
+//            }
+//        }
+        for (int i = 1; i <= numOfThings; i++) {
+            int w = goods.get(i - 1).weight, v = goods.get(i - 1).value;
+            for (int j = 1; j <= capOfPack; j++) {
+                if (j < w) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    int temp = dp[i - 1][j - w] + v;
+                    dp[i][j] = Math.max(temp, dp[i - 1][j]);
+                }
+            }
+        }
+
+        return dp[numOfThings][capOfPack];
+    }
+
+    public int chooseItems() {
+        int[] x = new int[numOfThings];
+        int j = capOfPack;
+        for (int i = numOfThings; i > 0; i--) {
+            int w = goods.get(i - 1).weight;
+            if (j - w < 0)
+                continue;
+            if (dp[i][j] > dp[i - 1][j]) {
+                x[i - 1] = 1;
+                j -= w;
+            }
+        }
+        int sumWeight = 0;
+        for (int i = 0; i < x.length; i++) {
+            if (x[i] == 1)
+                sumWeight += goods.get(i).weight;
+        }
+        System.out.println("Worker benefit is:" + sumWeight);
+        return sumWeight;
+    }
+
+
 }
