@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
  * Date: 2023/7/14
  * task participants: send the current locations and vel to cp
  */
-public class TP {
+public class TaskParticipants {
     /**
      * the paillier to encrypt
      */
@@ -34,14 +34,21 @@ public class TP {
      * the encrypted location of enter system
      */
     protected List<List<BigInteger>> eStartLocs = new ArrayList<>();
-    private int vel;
+    private int vel = 0;
     private static final int NUMBER = 111000;
     String pathItem = null;
     public BigInteger eVel;
 
-    public TP() {
-        vel = 11;
-        pathItem = "res/T-Drive/T-Drive-4.csv";
+    public TaskParticipants() {
+
+    }
+
+    public TaskParticipants(int v, String p) throws ExecutionException, InterruptedException {
+        vel = v;
+        pathItem = p;
+
+        readData();
+        encryptInformation();
     }
 
     /**
@@ -51,8 +58,8 @@ public class TP {
      * one longitude = 111km = 111000m
      */
     private void encryptInformation() throws ExecutionException, InterruptedException {
-        //KGC send the paillier to TR
-        pai = TR.getPai();
+        //KGC send the paillier to TaskRequester
+        pai = TaskRequester.getPai();
 
         eVel = pai.encrypt(BigInteger.valueOf(vel));
 
@@ -66,6 +73,7 @@ public class TP {
                 return new Pair(pai.encrypt(BigInteger.valueOf(temp1)), pai.encrypt(BigInteger.valueOf(temp2)));
             }, executor);
         }
+        executor.shutdown();
         for (int i = 0; i < temps.length; i++) {
             Pair tmp = temps[i].get();
             List<BigInteger> eStartLoc = new ArrayList<>();
@@ -94,13 +102,7 @@ public class TP {
         }
     }
 
-    public BigInteger getEcv(BigInteger c){
+    public BigInteger getEcv(BigInteger c) {
         return pai.encrypt(c.divide(BigInteger.valueOf(vel)));
-    }
-
-    public List<List<BigInteger>> getEncStartLocs() throws ExecutionException, InterruptedException {
-        readData();
-        encryptInformation();
-        return eStartLocs;
     }
 }

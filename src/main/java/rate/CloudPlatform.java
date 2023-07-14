@@ -2,7 +2,6 @@ package rate;
 
 import utils.sg.smu.securecom.protocol.*;
 import utils.sg.smu.securecom.utils.Good;
-import utils.sg.smu.securecom.utils.Keys;
 import utils.sg.smu.securecom.utils.Pair;
 import utils.sg.smu.securecom.utils.Utils;
 
@@ -21,7 +20,7 @@ import java.util.concurrent.Executors;
  * Cloud platform: store the encrypted data and computing data
  * Computing Service platform: provides online computation services
  */
-public class CpCsp {
+public class CloudPlatform {
     private static final int SIGMA = 128;//118;
     //receive the task position
     protected BigInteger[] eTaskLoc = null;
@@ -45,26 +44,29 @@ public class CpCsp {
     //offline
     public HashMap<String, BigInteger> randomRestore = new HashMap<String, BigInteger>();
     //receive the sk1 and sk2
-    protected PaillierThdDec cp = TR.getCp();
-    protected PaillierThdDec csp = TR.getCsp();
-    protected Paillier pai = TR.getPai();
+    protected PaillierThdDec cp = TaskRequester.getCp();
+    protected PaillierThdDec csp = TaskRequester.getCsp();
+    protected Paillier pai = TaskRequester.getPai();
 
-    TR tr = new TR();
-    TP tp = new TP();
+    TaskRequester tr = null;
+    TaskParticipants tp = null;
 
-    public CpCsp() throws ExecutionException, InterruptedException {
+    public CloudPlatform(int a, int b, TaskRequester r, TaskParticipants p) throws ExecutionException, InterruptedException {
+        tr = r;
+        tp = p;
+
         capOfPack = tr.budget;
         eTaskTime = tr.eTaskTime;
-        eTaskLoc = tr.getETaskLoc();
+        eTaskLoc = tr.eTaskLoc;
 
-        eStartLocs = tp.getEncStartLocs();
+        eStartLocs = tp.eStartLocs;
         numOfThings = eStartLocs.size();
         eVel = tp.eVel;
         goods = new ArrayList<>();
 
-        alpha = 1;
-        beta = 1;
-        dp = new int[numOfThings + 1][capOfPack + 1];
+        alpha = a;
+        beta = b;
+
         secCmpRandom();
     }
 
@@ -108,9 +110,11 @@ public class CpCsp {
         executor.shutdown();
         //decrypt service Times
         for (BigInteger eServeTime : eServeTimes) {
-            int serviceTimes = Integer.parseInt(String.valueOf(pai.decrypt(eServeTime)));
+            int serviceTimes = Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eServeTime), csp.partyDecrypt(eServeTime))));
             goods.add(new Good((serviceTimes * alpha), (serviceTimes * beta)));
         }
+        numOfThings = goods.size();
+        dp = new int[numOfThings + 1][capOfPack + 1];
     }
 
     //calculate the result via dp
@@ -169,25 +173,30 @@ public class CpCsp {
     }
 
     public int chooseItems() {
-        int[] x = new int[numOfThings];
+        int[] selectTps = new int[numOfThings];
         int j = capOfPack;
         for (int i = numOfThings; i > 0; i--) {
             int w = goods.get(i - 1).weight;
             if (j - w < 0)
                 continue;
             if (dp[i][j] > dp[i - 1][j]) {
-                x[i - 1] = 1;
+                selectTps[i - 1] = 1;
                 j -= w;
             }
         }
-        int sumWeight = 0;
-        for (int i = 0; i < x.length; i++) {
-            if (x[i] == 1)
-                sumWeight += goods.get(i).weight;
+        int tpBenefit = 0;
+        for (int i = 0; i < selectTps.length; i++) {
+            if (selectTps[i] == 1)
+                tpBenefit += goods.get(i).weight;
         }
-        System.out.println("Worker benefit is:" + sumWeight);
-        return sumWeight;
+        System.out.println("TPs benefit is:" + tpBenefit);
+        return tpBenefit;
     }
 
-
+    public void solve() throws ExecutionException, InterruptedException {
+        calculateServiceTime();
+        int trBenefit = dpCalculate();
+        System.out.println("TRs benefit is :" + trBenefit);
+        chooseItems();
+    }
 }

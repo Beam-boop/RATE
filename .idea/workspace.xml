@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="07594db0-94f5-4427-b2e0-44226596cf8e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rate/CpCsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/CpCsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LocalRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LocalRun.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rate/CpCsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/CloudPlatform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rate/TP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/TaskParticipants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rate/TR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/TaskRequester.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +60,14 @@
       <recent name="Utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.SecDiv">
+  <component name="RunManager" selected="Application.LocalRun">
+    <configuration name="LocalRun" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="LocalRun" />
+      <module name="RATE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SecCmp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="utils.sg.smu.securecom.protocol.SecCmp" />
       <module name="RATE" />
@@ -97,6 +107,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.LocalRun" />
         <item itemvalue="Application.SecDiv" />
         <item itemvalue="Application.SecCmp" />
       </list>
@@ -110,7 +121,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1689295154672</updated>
-      <workItem from="1689295157252" duration="20412000" />
+      <workItem from="1689295157252" duration="26414000" />
     </task>
     <servers />
   </component>
@@ -130,5 +141,16 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/rate/CloudPlatform.java</url>
+          <line>160</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

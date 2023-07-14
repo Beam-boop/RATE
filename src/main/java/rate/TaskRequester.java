@@ -18,7 +18,7 @@ import java.util.List;
  * Task requester: send the encrypted task location, budget and task time to cp.
  * generate the private key and public key. and send them to the related entities.
  */
-public class TR {
+public class TaskRequester {
     /**
      * the paillier to encrypt
      */
@@ -48,13 +48,20 @@ public class TR {
     private static final int keyLen = 128;
     private static Keys key = new Keys(keyLen);
 
+    public TaskRequester(){
+
+    }
     /**
-     * when you use this class, you can modify the TR to update the information, such as budget, taskTime and pathInfo.
+     * when you use this class, you can modify the TaskRequester to update the information, such as budget, taskTime and pathInfo.
      */
-    public TR() {
-        budget = 100;
-        taskTime = 100;
-        pathInfo = "res/T-Drive/T-Drive-4-info.csv";
+    public TaskRequester(int b, int t, String p) {
+        budget = b;
+        taskTime = t;
+        pathInfo = p;
+        pai = key.pai;
+
+        readData();
+        encryptInformation();
     }
     //to  encrypt
     public static Paillier getPai(){
@@ -99,11 +106,5 @@ public class TR {
         int d = (int) Math.round(taskLoc.get(1) * NUMBER);
         eTaskLoc[0] = pai.encrypt(BigInteger.valueOf(c));
         eTaskLoc[1] = pai.encrypt(BigInteger.valueOf(d));
-    }
-
-    public BigInteger[] getETaskLoc() {
-        readData();
-        encryptInformation();
-        return eTaskLoc;
     }
 }
