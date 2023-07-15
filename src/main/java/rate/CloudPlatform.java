@@ -171,7 +171,7 @@ public class CloudPlatform {
                 }
             }
         }
-
+        System.out.println("TR benefit is :" + dp[numOfThings][capOfPack]);
         return dp[numOfThings][capOfPack];
     }
 
@@ -196,10 +196,9 @@ public class CloudPlatform {
         return tpBenefit;
     }
 
-    public void solve() throws ExecutionException, InterruptedException {
+    //return numOfThings, capOfPack, requesterBenefit, workerBenefit, time, time - decryptTime[1], time - decryptTime[0], keyLen
+    public int[] solve() throws ExecutionException, InterruptedException {
         calculateServiceTime();
-        int trBenefit = dpCalculate();
-        System.out.println("TR benefit is :" + trBenefit);
-        chooseItems();
+        return new int[]{numOfThings, capOfPack, dpCalculate(), chooseItems()};
     }
 }

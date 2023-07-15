@@ -22,25 +22,33 @@ public class LocalRun {
         //rate
         System.out.println("-------------------TDrive--------------------");
         System.out.println("-------------------rate--------------------");
-        for(int k = keyIndex[0]; k < keyIndex[1]; k++){
+        for (int k = keyIndex[0]; k < keyIndex[1]; k++) {
             for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
                 for (int m = betaIndex[0]; m < betaIndex[1]; m++) {
                     for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
                         if (containOneForm) {
                             for (int v = velIndex[0]; v < velIndex[1]; v++) {
+                                long startTime = System.currentTimeMillis();
                                 //set TP and TR
                                 TaskRequester tr = new TaskRequester(b, 550, keyArr[k], filenameInfo);
+                                long oneTime = System.currentTimeMillis();
                                 TaskParticipants tp = new TaskParticipants(velArr[v], filenameItem);
+                                long twoTime = System.currentTimeMillis();
                                 //set CP and CSP
                                 CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
-                                cp.solve();
+                                int[] message = cp.solve();
+                                long endTime = System.currentTimeMillis();
+
                                 System.out.println("------------------------------------------");
+                                Utils.writeResultToCsv("TDrive", "rate", alphaArr[n], betaArr[m], message[0],
+                                        message[1], message[2], message[3], (int) (endTime - startTime), (int) (twoTime - oneTime), (int) (endTime - twoTime), keyArr[k]);
                             }
                         }
                     }
                 }
             }
         }
+        Utils.Text2csv();
     }
 
     public static void main(String[] args) throws Exception {

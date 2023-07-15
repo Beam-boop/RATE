@@ -107,11 +107,11 @@ public class Utils {
         writeText.append(resultMap.get("ratio") + ',');
         writeText.append(resultMap.get("number") + ',');
         writeText.append(resultMap.get("B") + ',');
-        writeText.append(resultMap.get("request") + ',');
-        writeText.append(resultMap.get("worker") + ',');
-        writeText.append(resultMap.get("requestTime") + ',');
-        writeText.append(resultMap.get("workerTime") + ',');
-        writeText.append(resultMap.get("cpTime") + ',');
+        writeText.append(resultMap.get("TR benefit") + ',');
+        writeText.append(resultMap.get("TPs benefit") + ',');
+        writeText.append(resultMap.get("TR time") + ',');
+        writeText.append(resultMap.get("TPs time") + ',');
+        writeText.append(resultMap.get("cp time") + ',');
         writeText.append(resultMap.get("keyLen") + ',');
         writeText.newLine();
 
@@ -132,11 +132,11 @@ public class Utils {
             writeText.append("Ratio" + ',');
             writeText.append("Number" + ',');
             writeText.append("Budget" + ',');
-            writeText.append("RequestBenefit" + ',');
-            writeText.append("WorkerBenefit" + ',');
-            writeText.append("RequestTime" + ',');
-            writeText.append("WorkerTime" + ',');
-            writeText.append("cpTime" + ',');
+            writeText.append("TR Benefit" + ',');
+            writeText.append("TPs Benefit" + ',');
+            writeText.append("TR Time" + ',');
+            writeText.append("TPs Time" + ',');
+            writeText.append("cp Time" + ',');
             writeText.append("KeyLen" + ',');
             writeText.newLine();    //换行
             writeText.flush();
@@ -205,7 +205,25 @@ public class Utils {
                 e.printStackTrace();
             }
         }
+    }
+    public static void writeResultToCsv(String dataMode, String solutionMode, int alpha, int beta, int number, int B, int request, int worker, int requestTime, int workerTime, int cpTime, int keyLen) throws Exception {
+        HashMap<String, String> resultMap = new HashMap<>();
+        resultMap.put("dataMode", dataMode);
+        resultMap.put("solutionMode", solutionMode);
+        if (alpha == 0 && beta == 0) {
+            resultMap.put("ratio", "---");
+        } else {
+            resultMap.put("ratio", String.valueOf((float) beta / (float) alpha));
+        }
+        resultMap.put("number", String.valueOf(number));
+        resultMap.put("B", String.valueOf(B));
+        resultMap.put("TR benefit", String.valueOf(request));
+        resultMap.put("TPs benefit", String.valueOf(worker));
+        resultMap.put("TR time", String.valueOf(requestTime));
+        resultMap.put("TPs time", String.valueOf(workerTime));
+        resultMap.put("cp time", String.valueOf(cpTime));
+        resultMap.put("keyLen", String.valueOf(keyLen));
+        Utils.Text2csv(resultMap);
 
     }
-
 }
