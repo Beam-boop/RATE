@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
  * Date: 2023/7/14
  * task participants: send the current locations and vel to cp
  */
-public class TaskParticipants {
+public class SecureTaskParticipants {
     /**
      * the paillier to encrypt
      */
@@ -39,11 +39,11 @@ public class TaskParticipants {
     String pathItem = null;
     public BigInteger eVel;
 
-    public TaskParticipants() {
+    public SecureTaskParticipants() {
 
     }
 
-    public TaskParticipants(int v, String p) throws ExecutionException, InterruptedException {
+    public SecureTaskParticipants(int v, String p) throws ExecutionException, InterruptedException {
         vel = v;
         System.out.println("vel is: "+ vel);
         pathItem = p;
@@ -59,8 +59,8 @@ public class TaskParticipants {
      * one longitude = 111km = 111000m
      */
     private void encryptInformation() throws ExecutionException, InterruptedException {
-        //KGC send the paillier to TaskRequester
-        pai = TaskRequester.getPai();
+        //KGC send the paillier to SecureTaskRequester
+        pai = SecureTaskRequester.getPai();
 
         eVel = pai.encrypt(BigInteger.valueOf(vel));
 

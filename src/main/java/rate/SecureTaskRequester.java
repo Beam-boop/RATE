@@ -18,7 +18,7 @@ import java.util.List;
  * Task requester: send the encrypted task location, budget and task time to cp.
  * generate the private key and public key. and send them to the related entities.
  */
-public class TaskRequester {
+public class SecureTaskRequester {
     /**
      * the paillier to encrypt
      */
@@ -48,15 +48,15 @@ public class TaskRequester {
 //    private static final int keyLen = 128;
     private static Keys key;
 
-    public TaskRequester() {
+    public SecureTaskRequester() {
 
     }
 
     /**
-     * when you use this class, you can modify the TaskRequester to
+     * when you use this class, you can modify the SecureTaskRequester to
      * update the information, such as budget, taskTime and pathInfo.
      */
-    public TaskRequester(int b, int t, int k, String p) {
+    public SecureTaskRequester(int b, int t, int k, String p) {
         key = new Keys(k);
         System.out.println("keyLen is: " + k);
         budget = b;

@@ -1,6 +1,10 @@
-import rate.CloudPlatform;
-import rate.TaskParticipants;
-import rate.TaskRequester;
+import contrastexperiment.dp.CloudPlatform;
+import contrastexperiment.dp.TaskParticipants;
+import contrastexperiment.dp.TaskRequester;
+import contrastexperiment.ga.GeneticAlgorithm;
+import rate.SecureCloudPlatform;
+import rate.SecureTaskParticipants;
+import rate.SecureTaskRequester;
 import utils.Utils;
 
 import java.util.List;
@@ -30,12 +34,12 @@ public class LocalRun {
                             for (int v = velIndex[0]; v < velIndex[1]; v++) {
                                 long startTime = System.currentTimeMillis();
                                 //set TP and TR
-                                TaskRequester tr = new TaskRequester(b, 550, keyArr[k], filenameInfo);
+                                SecureTaskRequester tr = new SecureTaskRequester(b, 550, keyArr[k], filenameInfo);
                                 long oneTime = System.currentTimeMillis();
-                                TaskParticipants tp = new TaskParticipants(velArr[v], filenameItem);
+                                SecureTaskParticipants tp = new SecureTaskParticipants(velArr[v], filenameItem);
                                 long twoTime = System.currentTimeMillis();
                                 //set CP and CSP
-                                CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
+                                SecureCloudPlatform cp = new SecureCloudPlatform(alphaArr[n], betaArr[m], tr, tp);
                                 int[] message = cp.solve();
                                 long endTime = System.currentTimeMillis();
 
@@ -43,6 +47,72 @@ public class LocalRun {
                                 Utils.writeResultToCsv("TDrive", "rate", alphaArr[n], betaArr[m], message[0],
                                         message[1], message[2], message[3], (int) (endTime - startTime), (int) (twoTime - oneTime), (int) (endTime - twoTime), keyArr[k]);
                             }
+                        }
+                    }
+                }
+            }
+        }
+        Utils.Text2csv();
+        System.out.println("---------------------------dp-------------------------");
+        for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
+            for (int m = betaIndex[0]; m < betaIndex[1]; m++) {
+                for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+                    if (containOneForm) {
+                        for (int v = velIndex[0]; v < velIndex[1]; v++) {
+                            long startTime = System.currentTimeMillis();
+                            //set TP and TR
+                            TaskRequester tr = new TaskRequester(b, 550, filenameInfo);
+                            long oneTime = System.currentTimeMillis();
+                            TaskParticipants tp = new TaskParticipants(velArr[v], filenameItem);
+                            long twoTime = System.currentTimeMillis();
+                            //set CP and CSP
+                            CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
+                            int[] message = cp.solve();
+                            long endTime = System.currentTimeMillis();
+
+                            System.out.println("------------------------------------------");
+                            Utils.writeResultToCsv("TDrive", "dp", alphaArr[n], betaArr[m], message[0],
+                                message[1], message[2], message[3], (int) (endTime - startTime), (int) (twoTime - oneTime), (int) (endTime - twoTime), 0);
+                        }
+                    }
+                }
+            }
+        }
+        Utils.Text2csv();
+
+        System.out.println("-------------------ga--------------------");
+        for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
+            for (int m = betaIndex[0]; m < betaIndex[1]; m++) {
+                for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+                    if (containOneForm) {
+                        for (int v = velIndex[0]; v < velIndex[1]; v++) {
+                            int totalTime = 0;
+                            TaskRequester tr = new TaskRequester(b, 550, filenameInfo);
+                            TaskParticipants tp = new TaskParticipants(velArr[v], filenameItem);
+                            //set CP and CSP
+                            CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
+                            List<Integer> serveTimes = cp.calculateServiceTime();
+                            int numOfThing = serveTimes.size();
+                            int capOfPack = b;
+                            GeneticAlgorithm gaKnapsack = null;
+                            int requesterBenefit = 0;
+                            int workerBenefit = 0;
+                            for (int t = 0; t < 1; t++) {
+                                long startTime = System.currentTimeMillis();
+                                gaKnapsack = new GeneticAlgorithm(100, capOfPack, numOfThing, 5000, 0.5f, 0.01f, serveTimes, alphaArr[n], betaArr[m]);
+                                requesterBenefit = gaKnapsack.geneticAlgorithmProcess(0);
+                                workerBenefit = gaKnapsack.sumWeight();
+                                System.out.println(workerBenefit);
+                                long endTime = System.currentTimeMillis();
+                                int time = (int) (endTime - startTime);
+                                totalTime += time;
+                                System.out.println("plaintext running time: " + time + "ms");
+                                System.out.println("----------------------------------------------------------------------");
+                            }
+                            System.out.println("ciphertext encrypt total time: " + totalTime + "ms");
+                            System.out.println("----------------------------------------------------------------------");
+                            Utils.writeResultToCsv("tDrive", "GA", alphaArr[n], betaArr[m], numOfThing,
+                                    capOfPack, requesterBenefit, workerBenefit, totalTime, 0,0,0);
                         }
                     }
                 }

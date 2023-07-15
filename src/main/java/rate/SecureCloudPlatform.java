@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
  * Cloud platform: store the encrypted data and computing data
  * Computing Service platform: provides online computation services
  */
-public class CloudPlatform {
+public class SecureCloudPlatform {
     private static final int SIGMA = 128;//118;
     //receive the task position
     protected BigInteger[] eTaskLoc = null;
@@ -44,14 +44,14 @@ public class CloudPlatform {
     //offline
     public HashMap<String, BigInteger> randomRestore = new HashMap<String, BigInteger>();
     //receive the sk1 and sk2
-    protected PaillierThdDec cp = TaskRequester.getCp();
-    protected PaillierThdDec csp = TaskRequester.getCsp();
-    protected Paillier pai = TaskRequester.getPai();
+    protected PaillierThdDec cp = SecureTaskRequester.getCp();
+    protected PaillierThdDec csp = SecureTaskRequester.getCsp();
+    protected Paillier pai = SecureTaskRequester.getPai();
 
-    TaskRequester tr = null;
-    TaskParticipants tp = null;
+    SecureTaskRequester tr = null;
+    SecureTaskParticipants tp = null;
 
-    public CloudPlatform(int a, int b, TaskRequester r, TaskParticipants p) throws ExecutionException, InterruptedException {
+    public SecureCloudPlatform(int a, int b, SecureTaskRequester r, SecureTaskParticipants p) throws ExecutionException, InterruptedException {
         tr = r;
         tp = p;
 
