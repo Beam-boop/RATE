@@ -125,7 +125,7 @@ public class GeneticAlgorithm {
 
     }
 
-    public GeneticAlgorithm(int populationSize, int capacity, int numOfThings, int g, float c, float m, List<Integer> data, int alpha, int beta) {
+    public GeneticAlgorithm(int populationSize, int capacity, int numOfThings, int g, float c, float m, List<Integer> data, double alpha, double beta) {
         this.popSize = populationSize;
         this.chromoLength = numOfThings;
         this.crossoverRate = c;
@@ -137,8 +137,8 @@ public class GeneticAlgorithm {
         this.charge = new int[data.size()];
 
         for (int i = 0; i < data.size(); i++) {
-            weight[i] = data.get(i) * alpha;
-            charge[i] = data.get(i) * beta;
+            weight[i] = (int) (data.get(i) * alpha);
+            charge[i] = (int) (data.get(i) * beta);
         }
     }
 

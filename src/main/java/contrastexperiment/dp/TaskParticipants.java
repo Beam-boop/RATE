@@ -52,9 +52,8 @@ public class TaskParticipants {
             while ((temp = readCsv.readLine()) != null) {
                 List<Integer> startLoc = new ArrayList<>();
                 String[] line = temp.split(",");
-                String time = line[4];
-                startLoc.add((int) (Double.valueOf(line[2].split("'")[1]) * NUMBER));
-                startLoc.add((int) (Double.valueOf(line[3].split("'")[1])* NUMBER));
+                startLoc.add((int) (Double.valueOf(line[1].split("'")[1]) * NUMBER));
+                startLoc.add((int) (Double.valueOf(line[2].split("'")[1])* NUMBER));
                 startLocs.add(startLoc);
             }
         } catch (IOException e) {

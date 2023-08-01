@@ -206,7 +206,7 @@ public class Utils {
             }
         }
     }
-    public static void writeResultToCsv(String dataMode, String solutionMode, int alpha, int beta, int number, int B, int request, int worker, int requestTime, int workerTime, int cpTime, int keyLen) throws Exception {
+    public static void writeResultToCsv(String dataMode, String solutionMode, double alpha, double beta, int number, int B, int request, int worker, int requestTime, int workerTime, int cpTime, int keyLen) throws Exception {
         HashMap<String, String> resultMap = new HashMap<>();
         resultMap.put("dataMode", dataMode);
         resultMap.put("solutionMode", solutionMode);

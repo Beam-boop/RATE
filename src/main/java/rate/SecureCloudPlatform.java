@@ -32,8 +32,8 @@ public class SecureCloudPlatform {
     protected BigInteger eVel = null;
     public List<BigInteger> eServeTimes = new ArrayList<>();
     ArrayList<Good> goods;
-    protected int alpha;
-    protected int beta;
+    protected double alpha;
+    protected double beta;
     protected int numOfThings;
 
     int numberOfParticipants;
@@ -53,7 +53,7 @@ public class SecureCloudPlatform {
     SecureTaskRequester tr = null;
     SecureTaskParticipants tp = null;
 
-    public SecureCloudPlatform(int a, int b, SecureTaskRequester r, SecureTaskParticipants p) throws ExecutionException, InterruptedException {
+    public SecureCloudPlatform(double a, double b, SecureTaskRequester r, SecureTaskParticipants p) throws ExecutionException, InterruptedException {
         tr = r;
         tp = p;
 
@@ -115,7 +115,7 @@ public class SecureCloudPlatform {
         //decrypt service Times
         for (BigInteger eServeTime : eServeTimes) {
             int serviceTimes = Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eServeTime), csp.partyDecrypt(eServeTime))));
-            goods.add(new Good((serviceTimes * alpha), (serviceTimes * beta)));
+            goods.add(new Good(((int)(serviceTimes * alpha)), ((int)(serviceTimes * beta))));
         }
         numOfThings = goods.size();
         System.out.println("number of TPs " + numberOfParticipants);

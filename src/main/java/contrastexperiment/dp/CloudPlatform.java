@@ -23,8 +23,8 @@ public class CloudPlatform {
     //receive the vel
     protected int vel = 0;
     ArrayList<Good> goods;
-    protected int alpha;
-    protected int beta;
+    protected double alpha;
+    protected double beta;
     protected int numOfThings;
     public int numOfParticipants;
     //receive the budget
@@ -37,7 +37,7 @@ public class CloudPlatform {
     TaskRequester tr = null;
     TaskParticipants tp = null;
 
-    public CloudPlatform(int a, int b, TaskRequester r, TaskParticipants p) {
+    public CloudPlatform(double a, double b, TaskRequester r, TaskParticipants p) {
         tr = r;
         tp = p;
 
@@ -68,7 +68,7 @@ public class CloudPlatform {
         }
 
         for (int serviceTime : serviceTimes) {
-            goods.add(new Good((serviceTime * alpha), (serviceTime * beta)));
+            goods.add(new Good((int) (serviceTime * alpha), (int) (serviceTime * beta)));
         }
 
         numOfThings = goods.size();

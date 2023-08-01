@@ -93,9 +93,8 @@ public class SecureTaskParticipants {
             while ((temp = readCsv.readLine()) != null) {
                 List<Double> startLoc = new ArrayList<>();
                 String[] line = temp.split(",");
-                String time = line[4];
+                startLoc.add(Double.valueOf(line[1].split("'")[1]));
                 startLoc.add(Double.valueOf(line[2].split("'")[1]));
-                startLoc.add(Double.valueOf(line[3].split("'")[1]));
                 startLocs.add(startLoc);
             }
         } catch (IOException e) {

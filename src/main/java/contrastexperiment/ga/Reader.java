@@ -43,7 +43,7 @@ public class Reader {
     }
 
     public static List<int[]> readZoKnap(String filenameItems) {
-        List<List<Integer>> dataTemp = Utils.readRows(filenameItems, 3,2);
+        List<List<Integer>> dataTemp = Utils.readRows(filenameItems, 1,1);
         int len = dataTemp.size();
         List<int[]> data = new ArrayList<int[]>();
         int[] weight = new int[len];

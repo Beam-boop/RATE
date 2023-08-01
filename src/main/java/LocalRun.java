@@ -17,11 +17,12 @@ public class LocalRun {
     public static void runTDrive(int[] alphaIndex, int[] betaIndex, int[] budget, int[] velIndex, int[] keyIndex, int[] numIndex) throws Exception {
         String filenameItem = "res/T-Drive/T-Drive-";
         String filenameInfo = "res/T-Drive/T-Drive-info.csv";
-        int[] alphaArr = new int[]{5};
-        int[] betaArr = new int[]{1, 2, 3, 4, 5};
+        double[] alphaArr = new double[]{1};
+        double[] betaArr = new double[]{0.2, 0.4, 0.6, 0.8, 1.0};
         int[] velArr = new int[]{1, 2, 4, 5, 11, 22};
         int[] numArr = new int[]{10, 20, 40, 50, 70, 100};
         int[] keyArr = new int[]{128, 512, 768, 1024, 1280};
+        int taskTime = 600;
         boolean containOneForm = true;
         Utils.csvHead();
         //rate
@@ -36,7 +37,7 @@ public class LocalRun {
                                 for (int v = velIndex[0]; v < velIndex[1]; v++) {
                                     long startTime = System.currentTimeMillis();
                                     //set TP and TR
-                                    SecureTaskRequester tr = new SecureTaskRequester(b, 550, keyArr[k], filenameInfo);
+                                    SecureTaskRequester tr = new SecureTaskRequester(b, taskTime, keyArr[k], filenameInfo);
                                     long oneTime = System.currentTimeMillis();
                                     SecureTaskParticipants tp = new SecureTaskParticipants(velArr[v], filenameItem + numArr[i] + ".csv");
                                     long twoTime = System.currentTimeMillis();
@@ -65,7 +66,7 @@ public class LocalRun {
                             for (int v = velIndex[0]; v < velIndex[1]; v++) {
                                 long startTime = System.currentTimeMillis();
                                 //set TP and TR
-                                TaskRequester tr = new TaskRequester(b, 550, filenameInfo);
+                                TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
                                 long oneTime = System.currentTimeMillis();
                                 TaskParticipants tp = new TaskParticipants(velArr[v], filenameItem + numArr[i] + ".csv");
                                 long twoTime = System.currentTimeMillis();
@@ -93,7 +94,7 @@ public class LocalRun {
                         if (containOneForm) {
                             for (int v = velIndex[0]; v < velIndex[1]; v++) {
                                 int totalTime = 0;
-                                TaskRequester tr = new TaskRequester(b, 550, filenameInfo);
+                                TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
                                 TaskParticipants tp = new TaskParticipants(velArr[v], filenameItem + numArr[i] + ".csv");
                                 //set CP and CSP
                                 CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
@@ -139,7 +140,7 @@ public class LocalRun {
         int[] alphaIndex = new int[]{0, 1};
         int[] betaIndex = new int[]{0, 5};
         int[] budgetTDrive = new int[]{750, 750, 1};
-        int[] velIndex = new int[]{5, 6};
+        int[] velIndex = new int[]{0, 1};
         int[] numIndex = new int[]{4, 5};
 
 
