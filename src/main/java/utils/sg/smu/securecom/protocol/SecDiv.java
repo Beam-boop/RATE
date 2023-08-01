@@ -44,18 +44,18 @@ public class SecDiv {
         int ix = 18608;
         int y = 16;
 
-        for(int i =0; i<1000;i++){
+        for(int i =0; i<1;i++){
 
             x = Math.abs(new Random().nextDouble())*100;
             y = Math.abs(new Random().nextInt(100))+1;
             ix = Math.abs(new Random().nextInt(10000))+1;
-            System.out.println(ix + " " + y);
+            System.out.println(x + " " + y);
             System.out.println(x / y);
-            System.out.println(ix / y);
+//            System.out.println(ix / y);
 
             //double type approximates the integer type
             BigInteger ex = user.pai.encrypt(new BigFraction(x).multiply(precision).getNumerator());
-            BigInteger eix = user.pai.encrypt(BigInteger.valueOf(ix));
+//            BigInteger eix = user.pai.encrypt(BigInteger.valueOf(ix));
             BigInteger ey = user.pai.encrypt(BigInteger.valueOf(y));
 
             BigInteger temp = Utils.getRandom(SIGMA);
@@ -64,20 +64,20 @@ public class SecDiv {
             divRandom.put("enr", user.pai.encrypt(temp.negate()));
 
             BigInteger c = secDiv_1(ex, ey, user.pai, user.cp, user.csp);
-            BigInteger ic = secDiv_1(eix, ey, user.pai, user.cp, user.csp);
+//            BigInteger ic = secDiv_1(eix, ey, user.pai, user.cp, user.csp);
 
             //Step-2 [𝑐/𝑣]
             BigInteger cv = c.divide(BigInteger.valueOf(y));
-            BigInteger icv = ic.divide(BigInteger.valueOf(y));
+//            BigInteger icv = ic.divide(BigInteger.valueOf(y));
 
-            BigInteger eres = secDiv_2(user.pai.encrypt(icv), user.pai, divRandom);
+//            BigInteger eres = secDiv_2(user.pai.encrypt(icv), user.pai, divRandom);
             BigInteger edres = secDiv_2(user.pai.encrypt(cv), user.pai, divRandom);
 
             user.pai.setDecryption(user.prikey);
-            BigInteger res = user.pai.decrypt(eres);
+//            BigInteger res = user.pai.decrypt(eres);
             BigInteger dres = user.pai.decrypt(edres);
             System.out.println(new BigDecimal(dres).divide(new BigDecimal(precision)).doubleValue());
-            System.out.println(res);
+//            System.out.println(res);
             System.out.println("---");
         }
     }

@@ -14,12 +14,13 @@ import java.util.List;
  * Date: 2023/7/14
  */
 public class LocalRun {
-    public static void runTDrive(int[] alphaIndex, int[] betaIndex, int[] budget, int[] velIndex, int[] keyIndex) throws Exception {
-        String filenameItem = "res/T-Drive/T-Drive-4.csv";
-        String filenameInfo = "res/T-Drive/T-Drive-4-info.csv";
+    public static void runTDrive(int[] alphaIndex, int[] betaIndex, int[] budget, int[] velIndex, int[] keyIndex, int[] numIndex) throws Exception {
+        String filenameItem = "res/T-Drive/T-Drive-";
+        String filenameInfo = "res/T-Drive/T-Drive-info.csv";
         int[] alphaArr = new int[]{5};
         int[] betaArr = new int[]{1, 2, 3, 4, 5};
-        int[] velArr = new int[]{1, 2, 5, 6, 11, 22};
+        int[] velArr = new int[]{1, 2, 4, 5, 11, 22};
+        int[] numArr = new int[]{10, 20, 40, 50, 70, 100};
         int[] keyArr = new int[]{128, 512, 768, 1024, 1280};
         boolean containOneForm = true;
         Utils.csvHead();
@@ -30,22 +31,24 @@ public class LocalRun {
             for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
                 for (int m = betaIndex[0]; m < betaIndex[1]; m++) {
                     for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
-                        if (containOneForm) {
-                            for (int v = velIndex[0]; v < velIndex[1]; v++) {
-                                long startTime = System.currentTimeMillis();
-                                //set TP and TR
-                                SecureTaskRequester tr = new SecureTaskRequester(b, 550, keyArr[k], filenameInfo);
-                                long oneTime = System.currentTimeMillis();
-                                SecureTaskParticipants tp = new SecureTaskParticipants(velArr[v], filenameItem);
-                                long twoTime = System.currentTimeMillis();
-                                //set CP and CSP
-                                SecureCloudPlatform cp = new SecureCloudPlatform(alphaArr[n], betaArr[m], tr, tp);
-                                int[] message = cp.solve();
-                                long endTime = System.currentTimeMillis();
+                        for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                            if (containOneForm) {
+                                for (int v = velIndex[0]; v < velIndex[1]; v++) {
+                                    long startTime = System.currentTimeMillis();
+                                    //set TP and TR
+                                    SecureTaskRequester tr = new SecureTaskRequester(b, 550, keyArr[k], filenameInfo);
+                                    long oneTime = System.currentTimeMillis();
+                                    SecureTaskParticipants tp = new SecureTaskParticipants(velArr[v], filenameItem + numArr[i] + ".csv");
+                                    long twoTime = System.currentTimeMillis();
+                                    //set CP and CSP
+                                    SecureCloudPlatform cp = new SecureCloudPlatform(alphaArr[n], betaArr[m], tr, tp);
+                                    int[] message = cp.solve();
+                                    long endTime = System.currentTimeMillis();
 
-                                System.out.println("------------------------------------------");
-                                Utils.writeResultToCsv("TDrive", "rate", alphaArr[n], betaArr[m], message[0],
-                                        message[1], message[2], message[3], (int) (endTime - startTime), (int) (twoTime - oneTime), (int) (endTime - twoTime), keyArr[k]);
+                                    System.out.println("------------------------------------------");
+                                    Utils.writeResultToCsv("TDrive", "rate", alphaArr[n], betaArr[m], message[0],
+                                            message[1], message[2], message[3], (int) (endTime - startTime), (int) (twoTime - oneTime), (int) (endTime - twoTime), keyArr[k]);
+                                }
                             }
                         }
                     }
@@ -57,22 +60,24 @@ public class LocalRun {
         for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
             for (int m = betaIndex[0]; m < betaIndex[1]; m++) {
                 for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
-                    if (containOneForm) {
-                        for (int v = velIndex[0]; v < velIndex[1]; v++) {
-                            long startTime = System.currentTimeMillis();
-                            //set TP and TR
-                            TaskRequester tr = new TaskRequester(b, 550, filenameInfo);
-                            long oneTime = System.currentTimeMillis();
-                            TaskParticipants tp = new TaskParticipants(velArr[v], filenameItem);
-                            long twoTime = System.currentTimeMillis();
-                            //set CP and CSP
-                            CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
-                            int[] message = cp.solve();
-                            long endTime = System.currentTimeMillis();
+                    for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                        if (containOneForm) {
+                            for (int v = velIndex[0]; v < velIndex[1]; v++) {
+                                long startTime = System.currentTimeMillis();
+                                //set TP and TR
+                                TaskRequester tr = new TaskRequester(b, 550, filenameInfo);
+                                long oneTime = System.currentTimeMillis();
+                                TaskParticipants tp = new TaskParticipants(velArr[v], filenameItem + numArr[i] + ".csv");
+                                long twoTime = System.currentTimeMillis();
+                                //set CP and CSP
+                                CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
+                                int[] message = cp.solve();
+                                long endTime = System.currentTimeMillis();
 
-                            System.out.println("------------------------------------------");
-                            Utils.writeResultToCsv("TDrive", "dp", alphaArr[n], betaArr[m], message[0],
-                                message[1], message[2], message[3], (int) (endTime - startTime), (int) (twoTime - oneTime), (int) (endTime - twoTime), 0);
+                                System.out.println("------------------------------------------");
+                                Utils.writeResultToCsv("TDrive", "DP", alphaArr[n], betaArr[m], message[0],
+                                        message[1], message[2], message[3], (int) (endTime - startTime), (int) (twoTime - oneTime), (int) (endTime - twoTime), 0);
+                            }
                         }
                     }
                 }
@@ -84,35 +89,37 @@ public class LocalRun {
         for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
             for (int m = betaIndex[0]; m < betaIndex[1]; m++) {
                 for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
-                    if (containOneForm) {
-                        for (int v = velIndex[0]; v < velIndex[1]; v++) {
-                            int totalTime = 0;
-                            TaskRequester tr = new TaskRequester(b, 550, filenameInfo);
-                            TaskParticipants tp = new TaskParticipants(velArr[v], filenameItem);
-                            //set CP and CSP
-                            CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
-                            List<Integer> serveTimes = cp.calculateServiceTime();
-                            int numOfThing = serveTimes.size();
-                            int capOfPack = b;
-                            GeneticAlgorithm gaKnapsack = null;
-                            int requesterBenefit = 0;
-                            int workerBenefit = 0;
-                            for (int t = 0; t < 1; t++) {
-                                long startTime = System.currentTimeMillis();
-                                gaKnapsack = new GeneticAlgorithm(100, capOfPack, numOfThing, 5000, 0.5f, 0.01f, serveTimes, alphaArr[n], betaArr[m]);
-                                requesterBenefit = gaKnapsack.geneticAlgorithmProcess(0);
-                                workerBenefit = gaKnapsack.sumWeight();
-                                System.out.println(workerBenefit);
-                                long endTime = System.currentTimeMillis();
-                                int time = (int) (endTime - startTime);
-                                totalTime += time;
-                                System.out.println("plaintext running time: " + time + "ms");
+                    for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                        if (containOneForm) {
+                            for (int v = velIndex[0]; v < velIndex[1]; v++) {
+                                int totalTime = 0;
+                                TaskRequester tr = new TaskRequester(b, 550, filenameInfo);
+                                TaskParticipants tp = new TaskParticipants(velArr[v], filenameItem + numArr[i] + ".csv");
+                                //set CP and CSP
+                                CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
+                                List<Integer> serveTimes = cp.calculateServiceTime();
+                                int numOfParticipants = cp.numOfParticipants;
+                                int numOfThing = serveTimes.size();
+                                int capOfPack = b;
+                                GeneticAlgorithm gaKnapsack = null;
+                                int requesterBenefit = 0;
+                                int workerBenefit = 0;
+                                for (int t = 0; t < 1; t++) {
+                                    long startTime = System.currentTimeMillis();
+                                    gaKnapsack = new GeneticAlgorithm(100, capOfPack, numOfThing, 5000, 0.5f, 0.01f, serveTimes, alphaArr[n], betaArr[m]);
+                                    requesterBenefit = gaKnapsack.geneticAlgorithmProcess(0);
+                                    workerBenefit = gaKnapsack.sumWeight();
+                                    System.out.println("TPs benefit is:" + workerBenefit);
+                                    long endTime = System.currentTimeMillis();
+                                    int time = (int) (endTime - startTime);
+                                    totalTime += time;
+                                    System.out.println("plaintext running time: " + time + "ms");
+                                }
+                                System.out.println("ciphertext encrypt total time: " + totalTime + "ms");
                                 System.out.println("----------------------------------------------------------------------");
+                                Utils.writeResultToCsv("tDrive", "GA", alphaArr[n], betaArr[m], numOfParticipants,
+                                        capOfPack, requesterBenefit, workerBenefit, totalTime, 0, 0, 0);
                             }
-                            System.out.println("ciphertext encrypt total time: " + totalTime + "ms");
-                            System.out.println("----------------------------------------------------------------------");
-                            Utils.writeResultToCsv("tDrive", "GA", alphaArr[n], betaArr[m], numOfThing,
-                                    capOfPack, requesterBenefit, workerBenefit, totalTime, 0,0,0);
                         }
                     }
                 }
@@ -133,9 +140,10 @@ public class LocalRun {
         int[] betaIndex = new int[]{0, 5};
         int[] budgetTDrive = new int[]{750, 750, 1};
         int[] velIndex = new int[]{5, 6};
+        int[] numIndex = new int[]{4, 5};
 
 
-        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex);
+        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex, numIndex);
 
         //beta/alpha 1.0
         //vel=1,2,4,5,11,22 B=500
@@ -146,9 +154,10 @@ public class LocalRun {
         betaIndex = new int[]{4, 5};
         budgetTDrive = new int[]{750, 750, 1};
         int[] budgetKnap = new int[]{997, 997, 1};
-        velIndex = new int[]{0, 6};
+        velIndex = new int[]{5, 6};
+        numIndex = new int[]{0, 6};
 
-        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex);
+//        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex, numIndex);
 //        runKanp(budgetKnap, velIndex, keyIndex);
 
         //beta/alpha 1.0
@@ -160,8 +169,9 @@ public class LocalRun {
         betaIndex = new int[]{4, 5};
         budgetTDrive = new int[]{100, 1000, 100};
         velIndex = new int[]{5, 6};
+        numIndex = new int[]{4, 5};
 
-        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex);
+//        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex, numIndex);
 //        runKanp(budgetTDrive, velIndex, keyIndex);
 
         //beta/alpha 1.0
@@ -174,7 +184,8 @@ public class LocalRun {
         budgetTDrive = new int[]{750, 750, 1};
         velIndex = new int[]{5, 6};
         keyIndex = new int[]{1, 5};
+        numIndex = new int[]{4, 5};
 
-        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex);
+//        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex, numIndex);
     }
 }

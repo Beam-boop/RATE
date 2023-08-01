@@ -5,18 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07594db0-94f5-4427-b2e0-44226596cf8e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/CloudPlatform.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/TaskParticipants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/TaskRequester.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/ga/Chromosome.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/ga/GeneticAlgorithm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/ga/Reader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-100.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-20.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-40.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-50.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-70.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/T-Drive/T-Drive-4-info.csv" beforeDir="false" afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-info.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/T-Drive/T-Drive-4.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/result.csv" beforeDir="false" afterPath="$PROJECT_DIR$/result.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LocalRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LocalRun.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rate/CloudPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/SecureCloudPlatform.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rate/TaskParticipants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/SecureTaskParticipants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rate/TaskRequester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/SecureTaskRequester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/CloudPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/CloudPlatform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/contrastexperiment/ga/GeneticAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/ga/GeneticAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rate/SecureCloudPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/SecureCloudPlatform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecAbs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecAbs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecCmp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecCmp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecDiv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecDiv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecMul.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecMul.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +57,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/SC-xidian/SC-Beam/RATE/src/main/java/contrastexperiment/dp",
+    "last_opened_file_path": "E:/SC-xidian/SC-Beam/RATE/res/T-Drive",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15332031",
     "project.structure.side.proportion": "0.0",
@@ -60,6 +66,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\SC-xidian\SC-Beam\RATE\res\T-Drive" />
       <recent name="E:\SC-xidian\SC-Beam\RATE\src\main\java\contrastexperiment\dp" />
       <recent name="E:\SC-xidian\SC-Beam\RATE\src\main\java\contrastexperiment\ga" />
     </key>
@@ -106,6 +113,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SecMul" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="utils.sg.smu.securecom.protocol.SecMul" />
+      <module name="RATE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.sg.smu.securecom.protocol.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="utils.sg.smu.securecom.protocol.test" />
+      <module name="RATE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.sg.smu.securecom.protocol.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -120,8 +153,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.LocalRun" />
-        <item itemvalue="Application.SecDiv" />
+        <item itemvalue="Application.test" />
+        <item itemvalue="Application.SecMul" />
         <item itemvalue="Application.SecCmp" />
+        <item itemvalue="Application.SecDiv" />
       </list>
     </recent_temporary>
   </component>
@@ -134,7 +169,11 @@
       <option name="presentableId" value="Default" />
       <updated>1689295154672</updated>
       <workItem from="1689295157252" duration="30840000" />
-      <workItem from="1689409859246" duration="12179000" />
+      <workItem from="1689409859246" duration="12420000" />
+      <workItem from="1689496282787" duration="634000" />
+      <workItem from="1689837104987" duration="5568000" />
+      <workItem from="1690185373787" duration="29967000" />
+      <workItem from="1690792800299" duration="9401000" />
     </task>
     <servers />
   </component>

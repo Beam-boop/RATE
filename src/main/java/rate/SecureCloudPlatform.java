@@ -35,6 +35,8 @@ public class SecureCloudPlatform {
     protected int alpha;
     protected int beta;
     protected int numOfThings;
+
+    int numberOfParticipants;
     //receive the budget
     protected int capOfPack;
     /**
@@ -60,7 +62,8 @@ public class SecureCloudPlatform {
         eTaskLoc = tr.eTaskLoc;
 
         eStartLocs = tp.eStartLocs;
-        numOfThings = eStartLocs.size();
+
+        numberOfParticipants = eStartLocs.size();
         eVel = tp.eVel;
         goods = new ArrayList<>();
 
@@ -115,7 +118,7 @@ public class SecureCloudPlatform {
             goods.add(new Good((serviceTimes * alpha), (serviceTimes * beta)));
         }
         numOfThings = goods.size();
-        System.out.println("number of TPs " + numOfThings);
+        System.out.println("number of TPs " + numberOfParticipants);
         System.out.println("budget of task " + capOfPack);
         dp = new int[numOfThings + 1][capOfPack + 1];
     }
@@ -199,6 +202,6 @@ public class SecureCloudPlatform {
     //return numOfThings, capOfPack, requesterBenefit, workerBenefit, time, time - decryptTime[1], time - decryptTime[0], keyLen
     public int[] solve() throws ExecutionException, InterruptedException {
         calculateServiceTime();
-        return new int[]{numOfThings, capOfPack, dpCalculate(), chooseItems()};
+        return new int[]{numberOfParticipants, capOfPack, dpCalculate(), chooseItems()};
     }
 }

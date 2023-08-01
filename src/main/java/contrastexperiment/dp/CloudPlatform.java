@@ -26,6 +26,7 @@ public class CloudPlatform {
     protected int alpha;
     protected int beta;
     protected int numOfThings;
+    public int numOfParticipants;
     //receive the budget
     protected int capOfPack;
     /**
@@ -45,7 +46,7 @@ public class CloudPlatform {
         taskLoc = tr.taskLoc;
 
         startLocs = tp.startLocs;
-        numOfThings = startLocs.size();
+        numOfParticipants = startLocs.size();
         vel = tp.vel;
         goods = new ArrayList<>();
 
@@ -71,7 +72,7 @@ public class CloudPlatform {
         }
 
         numOfThings = goods.size();
-        System.out.println("number of TPs " + numOfThings);
+        System.out.println("number of TPs " + numOfParticipants);
         System.out.println("budget of task " + capOfPack);
         dp = new int[numOfThings + 1][capOfPack + 1];
         return serviceTimes;
@@ -135,6 +136,6 @@ public class CloudPlatform {
     //return numOfThings, capOfPack, requesterBenefit, workerBenefit, time, time - decryptTime[1], time - decryptTime[0], keyLen
     public int[] solve() throws ExecutionException, InterruptedException {
         calculateServiceTime();
-        return new int[]{numOfThings, capOfPack, dpCalculate(), chooseItems()};
+        return new int[]{numOfParticipants, capOfPack, dpCalculate(), chooseItems()};
     }
 }

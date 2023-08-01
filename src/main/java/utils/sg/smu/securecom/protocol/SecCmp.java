@@ -1,5 +1,6 @@
 package utils.sg.smu.securecom.protocol;
 
+import org.apache.commons.math3.fraction.BigFraction;
 import utils.sg.smu.securecom.utils.User;
 import utils.sg.smu.securecom.utils.Utils;
 
@@ -50,12 +51,13 @@ public class SecCmp {
 
     public static void main(String[] args) {
 
-        int key_len = 256;
+        int key_len = 128;
         User user = new User(key_len);
-        int x = 23;
-        int y = 22;
-        BigInteger ex = user.pai.encrypt(BigInteger.valueOf(x));
-        BigInteger ey = user.pai.encrypt(BigInteger.valueOf(y));
+        BigInteger precision = BigInteger.valueOf(2).pow(106);
+        double x = 22.1;
+        double y = 22.1;
+        BigInteger ex = user.pai.encrypt(new BigFraction(x).multiply(precision).getNumerator());
+        BigInteger ey = user.pai.encrypt(new BigFraction(y).multiply(precision).getNumerator());
 
         HashMap<String, BigInteger> randomRestore = new HashMap<>();
         BigInteger mid = user.pai.getPublicKey().getMid();

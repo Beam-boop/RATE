@@ -135,10 +135,6 @@ public class GeneticAlgorithm {
         this.density = new double[chromoLength];
         this.weight = new int[data.size()];
         this.charge = new int[data.size()];
-        System.out.println("number of thing is " + numOfThings);
-        System.out.println("capacity is " + capacity);
-        System.out.println("alpha is " + alpha);
-        System.out.println("beta is " + beta);
 
         for (int i = 0; i < data.size(); i++) {
             weight[i] = data.get(i) * alpha;
@@ -411,9 +407,9 @@ public class GeneticAlgorithm {
     }
 
     public int print(int t) throws Exception {
-        String data = String.valueOf((int)y);
+        String data = String.valueOf((int) y);
         if (generation == iterNum - 1) {
-            System.out.println(data);
+            System.out.println("TR benefit is: " + data);
 
         }
 //        Utils.writeText(data, t);
