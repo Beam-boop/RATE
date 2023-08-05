@@ -63,8 +63,9 @@ public class SecureTaskRequester {
         taskTime = t;
         pathInfo = p;
         pai = key.pai;
+        taskLoc.add(116.42114);
+        taskLoc.add(39.90344);
 
-        readData();
         encryptInformation();
     }
 
@@ -93,8 +94,8 @@ public class SecureTaskRequester {
             BufferedReader readCsv = new BufferedReader(new FileReader(file));
             readCsv.readLine();
             String[] temp = readCsv.readLine().split(",");
-            taskLoc.add(Double.valueOf(temp[0].split("'")[1]));
-            taskLoc.add(Double.valueOf(temp[1].split("'")[1]));
+            taskLoc.add(116.42114);
+            taskLoc.add(39.90344);
 
         } catch (IOException e) {
             throw new RuntimeException(e);

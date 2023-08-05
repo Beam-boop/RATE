@@ -118,7 +118,7 @@ public class LocalRun {
                                 }
                                 System.out.println("ciphertext encrypt total time: " + totalTime + "ms");
                                 System.out.println("----------------------------------------------------------------------");
-                                Utils.writeResultToCsv("tDrive", "GA", alphaArr[n], betaArr[m], numOfParticipants,
+                                Utils.writeResultToCsv("TDrive", "GA", alphaArr[n], betaArr[m], numOfParticipants,
                                         capOfPack, requesterBenefit, workerBenefit, totalTime, 0, 0, 0);
                             }
                         }
@@ -134,7 +134,7 @@ public class LocalRun {
         //vel=22 B=500
         //rate dp ga
         //keylen=128
-        int[] keyIndex = new int[]{0, 1};
+        int[] keyIndex = new int[]{1, 2};
 
         System.out.println("------------------------------------ratio beta/alpha--------------------------------------");
         int[] alphaIndex = new int[]{0, 1};
@@ -158,7 +158,7 @@ public class LocalRun {
         velIndex = new int[]{5, 6};
         numIndex = new int[]{0, 6};
 
-//        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex, numIndex);
+        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex, numIndex);
 //        runKanp(budgetKnap, velIndex, keyIndex);
 
         //beta/alpha 1.0
@@ -168,11 +168,11 @@ public class LocalRun {
         System.out.println("------------------------------------Budget B--------------------------------------");
         alphaIndex = new int[]{0, 1};
         betaIndex = new int[]{4, 5};
-        budgetTDrive = new int[]{100, 1000, 100};
+        budgetTDrive = new int[]{400, 2000, 200};
         velIndex = new int[]{5, 6};
         numIndex = new int[]{4, 5};
 
-//        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex, numIndex);
+        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex, numIndex);
 //        runKanp(budgetTDrive, velIndex, keyIndex);
 
         //beta/alpha 1.0
@@ -187,6 +187,6 @@ public class LocalRun {
         keyIndex = new int[]{1, 5};
         numIndex = new int[]{4, 5};
 
-//        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex, numIndex);
+        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex, numIndex);
     }
 }

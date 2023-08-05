@@ -206,6 +206,7 @@ public class Utils {
             }
         }
     }
+
     public static void writeResultToCsv(String dataMode, String solutionMode, double alpha, double beta, int number, int B, int request, int worker, int requestTime, int workerTime, int cpTime, int keyLen) throws Exception {
         HashMap<String, String> resultMap = new HashMap<>();
         resultMap.put("dataMode", dataMode);
@@ -224,6 +225,30 @@ public class Utils {
         resultMap.put("cp time", String.valueOf(cpTime));
         resultMap.put("keyLen", String.valueOf(keyLen));
         Utils.Text2csv(resultMap);
+    }
 
+    public static void writeTimeToCsv(List<int[]> timeList) throws IOException {
+        // 如果该目录下不存在该文件，则文件会被创建到指定目录下。如果该目录有同名文件，那么该文件将被覆盖。
+        String FilePath = "result.csv";
+        File file = new File(FilePath);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        try {
+            //通过BufferedReader类创建一个使用默认大小输出缓冲区的缓冲字符输出流
+            BufferedWriter writeText = new BufferedWriter(new FileWriter(FilePath, true));
+            for (int i = 0; i < timeList.size(); i++) {
+                for (int j = 0; j < timeList.get(i).length; j++) {
+                    writeText.append(String.valueOf(timeList.get(i)[j]) + ',');
+                }
+                writeText.newLine();
+            }
+            writeText.flush();
+            writeText.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("没有找到指定文件");
+        } catch (IOException e) {
+            System.out.println("文件读写出错");
+        }
     }
 }
