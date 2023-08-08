@@ -1,5 +1,6 @@
 package contrastexperiment.dp;
 
+import rate.SecureTaskParticipants;
 import utils.sg.smu.securecom.protocol.Paillier;
 import utils.sg.smu.securecom.utils.Pair;
 
@@ -26,7 +27,7 @@ public class TaskParticipants {
      */
     protected List<List<Integer>> startLocs = new ArrayList<>();
 
-    public int vel = 0;
+    public List<Integer> vel;
     private static final int NUMBER = 111000;
     String pathItem = null;
 
@@ -35,9 +36,9 @@ public class TaskParticipants {
 
     }
 
-    public TaskParticipants(int v, String p){
-        vel = v;
-        System.out.println("vel is: "+ vel);
+    public TaskParticipants(int[] v, String p) throws ExecutionException, InterruptedException {
+        SecureTaskParticipants secureTaskParticipants = new SecureTaskParticipants(v, p);
+        vel = secureTaskParticipants.vel;
         pathItem = p;
 
         readData();

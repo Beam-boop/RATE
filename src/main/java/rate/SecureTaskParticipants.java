@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -34,18 +35,25 @@ public class SecureTaskParticipants {
      * the encrypted location of enter system
      */
     protected List<List<BigInteger>> eStartLocs = new ArrayList<>();
-    private int vel = 0;
+    public List<Integer> vel;
     private static final int NUMBER = 111000;
     String pathItem = null;
-    public BigInteger eVel;
+    public List<BigInteger> eVel;
 
     public SecureTaskParticipants() {
 
     }
 
-    public SecureTaskParticipants(int v, String p) throws ExecutionException, InterruptedException {
-        vel = v;
-        System.out.println("vel is: "+ vel);
+    public SecureTaskParticipants(int[] v, String p) throws ExecutionException, InterruptedException {
+        
+        vel = new ArrayList<>();
+        eVel = new ArrayList<>();
+        // choose the vel randomly
+        Random ran = new Random(25);
+        for (int i = 0; i < 100; i++) {
+            int vr = ran.nextInt(6);
+            vel.add(v[vr]);
+        }
         pathItem = p;
 
         readData();
@@ -62,12 +70,13 @@ public class SecureTaskParticipants {
         //KGC send the paillier to SecureTaskRequester
         pai = SecureTaskRequester.getPai();
 
-        eVel = pai.encrypt(BigInteger.valueOf(vel));
+
 
         ExecutorService executor = Executors.newFixedThreadPool(100);
         CompletableFuture<Pair>[] temps = new CompletableFuture[startLocs.size()];
         for (int i = 0; i < startLocs.size(); i++) {
             final int ij = i;
+            eVel.add(pai.encrypt(BigInteger.valueOf(vel.get(i))));
             temps[i] = CompletableFuture.supplyAsync(() -> {
                 int temp1 = (int) Math.round(startLocs.get(ij).get(0) * NUMBER);
                 int temp2 = (int) Math.round(startLocs.get(ij).get(1) * NUMBER);
@@ -102,7 +111,7 @@ public class SecureTaskParticipants {
         }
     }
 
-    public BigInteger getEcv(BigInteger c) {
-        return pai.encrypt(c.divide(BigInteger.valueOf(vel)));
+    public BigInteger getEcv(BigInteger c, int index) {
+        return pai.encrypt(c.divide(BigInteger.valueOf(vel.get(index))));
     }
 }

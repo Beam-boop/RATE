@@ -21,7 +21,7 @@ public class CloudPlatform {
     //receive the TPs current position
     protected List<List<Integer>> startLocs = null;
     //receive the vel
-    protected int vel = 0;
+    protected List<Integer> vel;
     ArrayList<Good> goods;
     protected double alpha;
     protected double beta;
@@ -58,8 +58,8 @@ public class CloudPlatform {
 
     //calculate the service time
     public List<Integer> calculateServiceTime() {
-        for (List<Integer> startLoc : startLocs) {
-            int arrivalTime = (Math.abs(startLoc.get(0) - taskLoc.get(0)) + Math.abs(startLoc.get(1) - taskLoc.get(1))) / vel;
+        for (int i = 0; i< startLocs.size();i++) {
+            int arrivalTime = (Math.abs(startLocs.get(i).get(0) - taskLoc.get(0)) + Math.abs(startLocs.get(i).get(1) - taskLoc.get(1))) / vel.get(i);
             int serviceTime = taskTime - arrivalTime;
             if (serviceTime > 0) {
                 serviceTimes.add(serviceTime);

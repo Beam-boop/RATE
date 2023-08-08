@@ -29,7 +29,7 @@ public class SecureCloudPlatform {
     //receive the TPs current position
     protected List<List<BigInteger>> eStartLocs = null;
     //receive the vel
-    protected BigInteger eVel = null;
+    protected List<BigInteger> eVel;
     public List<BigInteger> eServeTimes = new ArrayList<>();
     ArrayList<Good> goods;
     protected double alpha;
@@ -91,10 +91,10 @@ public class SecureCloudPlatform {
                 BigInteger eLong = SecAbs.secAbs(eStartLocs.get(ij).get(0), eTaskLoc[0], pai, cp, csp, randomRestore);
                 BigInteger eLat = SecAbs.secAbs(eStartLocs.get(ij).get(1), eTaskLoc[1], pai, cp, csp, randomRestore);
                 // turn c to worker
-                BigInteger c = SecDiv.secDiv_1(pai.add(eLong, eLat), eVel, pai, cp, csp);
+                BigInteger c = SecDiv.secDiv_1(pai.add(eLong, eLat), eVel.get(ij), pai, cp, csp);
 
                 //transmit [c/v] to cp
-                BigInteger ecv = tp.getEcv(c);
+                BigInteger ecv = tp.getEcv(c, ij);
 
                 //calculate the [d/v]
                 BigInteger dv = SecDiv.secDiv_2(ecv, pai, divRandom);
