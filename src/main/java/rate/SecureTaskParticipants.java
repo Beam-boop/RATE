@@ -44,7 +44,7 @@ public class SecureTaskParticipants {
 
     }
 
-    public SecureTaskParticipants(int[] v, String p) throws ExecutionException, InterruptedException {
+    public SecureTaskParticipants(int[] v, String p, boolean encrypt) throws ExecutionException, InterruptedException {
         
         vel = new ArrayList<>();
         eVel = new ArrayList<>();
@@ -57,7 +57,9 @@ public class SecureTaskParticipants {
         pathItem = p;
 
         readData();
-        encryptInformation();
+        if(encrypt){
+            encryptInformation();
+        }
     }
 
     /**

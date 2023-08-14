@@ -36,7 +36,7 @@ public class LocalRun {
                             //set TP and TR
                             SecureTaskRequester tr = new SecureTaskRequester(b, taskTime, keyArr[k], filenameInfo);
                             long oneTime = System.currentTimeMillis();
-                            SecureTaskParticipants tp = new SecureTaskParticipants(velArr, filenameItem + numArr[i] + ".csv");
+                            SecureTaskParticipants tp = new SecureTaskParticipants(velArr, filenameItem + numArr[i] + ".csv", true);
                             long twoTime = System.currentTimeMillis();
                             //set CP and CSP
                             SecureCloudPlatform cp = new SecureCloudPlatform(alphaArr[n], betaArr[m], tr, tp);
@@ -61,7 +61,7 @@ public class LocalRun {
                         //set TP and TR
                         TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
                         long oneTime = System.currentTimeMillis();
-                        TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv");
+                        TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv", false);
                         long twoTime = System.currentTimeMillis();
                         //set CP and CSP
                         CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
@@ -84,7 +84,7 @@ public class LocalRun {
                     for (int i = numIndex[0]; i < numIndex[1]; i++) {
                         int totalTime = 0;
                         TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
-                        TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv");
+                        TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv", false);
                         //set CP and CSP
                         CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
                         List<Integer> serveTimes = cp.calculateServiceTime();
@@ -127,7 +127,7 @@ public class LocalRun {
         int[] alphaIndex = new int[]{0, 1};
         int[] betaIndex = new int[]{0, 5};
         int[] budgetTDrive = new int[]{750, 750, 1};
-        int[] numIndex = new int[]{4, 5};
+        int[] numIndex = new int[]{3, 4};
 
 
         runTDrive(alphaIndex, betaIndex, budgetTDrive, keyIndex, numIndex);
@@ -154,7 +154,7 @@ public class LocalRun {
         alphaIndex = new int[]{0, 1};
         betaIndex = new int[]{4, 5};
         budgetTDrive = new int[]{400, 2000, 200};
-        numIndex = new int[]{4, 5};
+        numIndex = new int[]{3, 4};
 
         runTDrive(alphaIndex, betaIndex, budgetTDrive, keyIndex, numIndex);
 //        runKanp(budgetTDrive, velIndex, keyIndex);

@@ -36,8 +36,8 @@ public class TaskParticipants {
 
     }
 
-    public TaskParticipants(int[] v, String p) throws ExecutionException, InterruptedException {
-        SecureTaskParticipants secureTaskParticipants = new SecureTaskParticipants(v, p);
+    public TaskParticipants(int[] v, String p, boolean encrypt) throws ExecutionException, InterruptedException {
+        SecureTaskParticipants secureTaskParticipants = new SecureTaskParticipants(v, p, encrypt);
         vel = secureTaskParticipants.vel;
         pathItem = p;
 

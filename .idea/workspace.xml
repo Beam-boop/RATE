@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="RATE:jar3" />
+      <artifact name="RATE:jar2" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -10,16 +10,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07594db0-94f5-4427-b2e0-44226596cf8e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/RATE_jar2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/RATE_jar2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/RATE_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/RATE_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/RATE_jar2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/RATE_jar3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/RATE_jar4.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/RATE_jar2/RATE.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/RATE_jar2/RATE.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/RATE_jar/RATE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/RATE_jar2/RATE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/RATE_jar3/RATE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/RATE_jar4/RATE.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/result.csv" beforeDir="false" afterPath="$PROJECT_DIR$/result.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/AvgTimeRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AvgTimeRun.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LocalRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LocalRun.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/CloudPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/CloudPlatform.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/TaskParticipants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/TaskParticipants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rate/SecureCloudPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/SecureCloudPlatform.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/rate/SecureTaskParticipants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/SecureTaskParticipants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +81,7 @@
       <recent name="Utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AvgTimeRun">
+  <component name="RunManager" selected="Application.LocalRun">
     <configuration name="AvgTimeRun" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="AvgTimeRun" />
       <module name="RATE" />
@@ -145,8 +148,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.AvgTimeRun" />
         <item itemvalue="Application.LocalRun" />
+        <item itemvalue="Application.AvgTimeRun" />
         <item itemvalue="Application.test" />
         <item itemvalue="Application.SecMul" />
         <item itemvalue="Application.SecCmp" />
@@ -169,7 +172,7 @@
       <workItem from="1690792800299" duration="14775000" />
       <workItem from="1691134876880" duration="7023000" />
       <workItem from="1691243150805" duration="2931000" />
-      <workItem from="1691289509077" duration="9855000" />
+      <workItem from="1691289509077" duration="14061000" />
     </task>
     <servers />
   </component>
@@ -195,7 +198,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/rate/SecureTaskParticipants.java</url>
-          <line>78</line>
+          <line>80</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

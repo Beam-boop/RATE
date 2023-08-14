@@ -45,7 +45,7 @@ public class AvgTimeRun {
                                 //set TP and TR
                                 SecureTaskRequester tr = new SecureTaskRequester(b, taskTime, keyArr[k], filenameInfo);
                                 long oneTime = System.currentTimeMillis();
-                                SecureTaskParticipants tp = new SecureTaskParticipants(velArr, filenameItem + numArr[i] + ".csv");
+                                SecureTaskParticipants tp = new SecureTaskParticipants(velArr, filenameItem + numArr[i] + ".csv", true);
                                 long twoTime = System.currentTimeMillis();
                                 //set CP and CSP
                                 SecureCloudPlatform cp = new SecureCloudPlatform(alphaArr[n], betaArr[m], tr, tp);
@@ -69,6 +69,33 @@ public class AvgTimeRun {
         Utils.writeTimeToCsv(listCp);
         Utils.Text2csv();
 
+        System.out.println("---------------------------DP-------------------------");
+        List<int[]> timeList1 = new ArrayList<>();
+        for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
+            for (int m = betaIndex[0]; m < betaIndex[1]; m++) {
+                for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+                    for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                        int[] time = new int[10];
+                        for (int t = 0; t < 10; t++) {
+                            long startTime = System.currentTimeMillis();
+                            //set TP and TR
+                            TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
+                            TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv", false);
+                            //set CP and CSP
+                            CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
+                            int[] message = cp.solve();
+                            long endTime = System.currentTimeMillis();
+                            time[t] = (int) (endTime - startTime);
+                            System.out.println("plaintext running time: " + time[t] + "ms");
+                        }
+                        timeList1.add(time);
+                    }
+                }
+            }
+        }
+        Utils.writeTimeToCsv(timeList1);
+        Utils.Text2csv();
+
         System.out.println("-------------------GA--------------------");
         List<int[]> timeList = new ArrayList<>();
 
@@ -79,7 +106,7 @@ public class AvgTimeRun {
                         int[] time = new int[10];
                         int totalTime = 0;
                         TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
-                        TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv");
+                        TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv", false);
                         //set CP and CSP
                         CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
                         List<Integer> serveTimes = cp.calculateServiceTime();
@@ -120,7 +147,6 @@ public class AvgTimeRun {
         int[] alphaIndex = new int[]{0, 1};
         int[] betaIndex = new int[]{4, 5};
         int[] budgetTDrive = new int[]{750, 750, 1};
-        int[] velIndex = new int[]{5, 6};
         int[] numIndex = new int[]{0, 6};
 
 
@@ -135,7 +161,6 @@ public class AvgTimeRun {
         betaIndex = new int[]{0, 5};
         budgetTDrive = new int[]{750, 750, 1};
         int[] budgetKnap = new int[]{997, 997, 1};
-        velIndex = new int[]{5, 6};
         numIndex = new int[]{3, 4};
 
         runTDrive(alphaIndex, betaIndex, budgetTDrive, keyIndex, numIndex);
@@ -149,10 +174,9 @@ public class AvgTimeRun {
         alphaIndex = new int[]{0, 1};
         betaIndex = new int[]{4, 5};
         budgetTDrive = new int[]{400, 2000, 200};
-        velIndex = new int[]{5, 6};
         numIndex = new int[]{3, 4};
 
-//        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex, numIndex);
+        runTDrive(alphaIndex, betaIndex, budgetTDrive, keyIndex, numIndex);
 //        runKanp(budgetTDrive, velIndex, keyIndex);
 
         //beta/alpha 1.0
@@ -163,10 +187,9 @@ public class AvgTimeRun {
         alphaIndex = new int[]{0, 1};
         betaIndex = new int[]{4, 5};
         budgetTDrive = new int[]{750, 750, 1};
-        velIndex = new int[]{5, 6};
         keyIndex = new int[]{1, 5};
         numIndex = new int[]{4, 5};
 
-//        runTDrive(alphaIndex, betaIndex, budgetTDrive, velIndex, keyIndex, numIndex);
+        runTDrive(alphaIndex, betaIndex, budgetTDrive, keyIndex, numIndex);
     }
 }
