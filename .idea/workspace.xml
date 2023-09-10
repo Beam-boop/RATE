@@ -10,20 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07594db0-94f5-4427-b2e0-44226596cf8e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/RATE_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/RATE_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/RATE_jar2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/RATE_jar3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/RATE_jar4.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/RATE_jar/RATE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/RATE_jar2/RATE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/RATE_jar3/RATE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/RATE_jar4/RATE.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/result.csv" beforeDir="false" afterPath="$PROJECT_DIR$/result.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/AvgTimeRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AvgTimeRun.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LocalRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LocalRun.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/TaskParticipants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/TaskParticipants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rate/SecureTaskParticipants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/SecureTaskParticipants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecDiv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecDiv.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecMul.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecMul.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +48,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/SC-xidian/SC-Beam/RATE/src/main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/SC-xidian/SC-Beam/RATE_ITC&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15332031&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -173,6 +163,14 @@
       <workItem from="1691134876880" duration="7023000" />
       <workItem from="1691243150805" duration="2931000" />
       <workItem from="1691289509077" duration="14061000" />
+      <workItem from="1691998638303" duration="132000" />
+      <workItem from="1692000858993" duration="2136000" />
+      <workItem from="1692194765068" duration="706000" />
+      <workItem from="1692238438635" duration="1202000" />
+      <workItem from="1692346934603" duration="7279000" />
+      <workItem from="1693977624997" duration="1531000" />
+      <workItem from="1693993527572" duration="20294000" />
+      <workItem from="1694315765583" duration="689000" />
     </task>
     <servers />
   </component>
@@ -198,8 +196,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/rate/SecureTaskParticipants.java</url>
-          <line>80</line>
-          <option name="timeStamp" value="2" />
+          <line>88</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

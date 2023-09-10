@@ -31,7 +31,7 @@ public class SecMul {
         BigInteger y2 = csp.partyDecrypt(y);
         BigInteger maskedY = csp.finalDecrypt(y1, y2);
         BigInteger maskedXY = maskedX.multiply(maskedY);
-        BigInteger eXY = pai.encrypt(maskedXY);
+        BigInteger eXY = pai.encrypt(maskedXY.mod(pai.getPrivateKey().getN()));
 
         // Step-3 CP
         BigInteger e_r2_x = pai.multiply(ex, r2);

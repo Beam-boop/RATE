@@ -14,7 +14,7 @@ import java.util.Random;
  * Date: 2023/2/22
  */
 public class SecDiv {
-    public static BigInteger secDiv_1(BigInteger ex, BigInteger ey, Paillier pai, PaillierThdDec cp,
+    public static BigInteger    secDiv_1(BigInteger ex, BigInteger ey, Paillier pai, PaillierThdDec cp,
                                       PaillierThdDec csp) {
 
         // Step-1 turn c to user, [𝑐]←[𝑑]⋅[𝑣]^𝑟
