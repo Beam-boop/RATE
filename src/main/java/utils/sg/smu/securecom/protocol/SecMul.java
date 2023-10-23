@@ -31,7 +31,7 @@ public class SecMul {
         BigInteger y2 = csp.partyDecrypt(y);
         BigInteger maskedY = csp.finalDecrypt(y1, y2);
         BigInteger maskedXY = maskedX.multiply(maskedY);
-        BigInteger eXY = pai.encrypt(maskedXY.mod(pai.getPrivateKey().getN()));
+        BigInteger eXY = pai.encrypt(maskedXY.mod(pai.getPublicKey().getN()));
 
         // Step-3 CP
         BigInteger e_r2_x = pai.multiply(ex, r2);
@@ -53,7 +53,7 @@ public class SecMul {
         BigInteger precision = BigInteger.valueOf(2).pow(106);
 //        BigInteger precision = BigInteger.valueOf(1000);
         double x = 40.1;
-        double y = 20.2;
+        int y = 20;
         double z = 10.1;
         HashMap<String, BigInteger> randomRestore = new HashMap<>();
         BigInteger r1 = Utils.getRandom(SIGMA);
@@ -65,11 +65,13 @@ public class SecMul {
 
         Paillier pal = new Paillier();
         BigInteger ex = user.pai.encrypt(new BigFraction(x).multiply(precision).getNumerator());
-        BigInteger ey = user.pai.encrypt(new BigFraction(y).multiply(precision).getNumerator());
+        BigInteger ey = Utils.getRandom(SIGMA);
         BigInteger ez = user.pai.encrypt(new BigFraction(z).multiply(precision).getNumerator());
-        System.out.println((x + y) * z);
-        BigInteger exy = user.pai.add(ex, ey);
-        BigInteger exyz = secMul(exy, ez, user.pai, user.cp, user.csp, randomRestore);
+        System.out.println(x + z);
+
+//        BigInteger exz = secMul(ex, ez, user.pai, user.cp, user.csp, randomRestore);
+        BigInteger exz = user.pai.add(ez, ex);
+//        BigInteger exyz = user.pai.sub(ex, ez);
         user.pai.setDecryption(user.prikey);
 //        System.out.println(user.pai.decrypt(exy));
 //
@@ -95,7 +97,9 @@ public class SecMul {
 //        BigInteger resdxy = user.pai.decrypt(edxy);
 //        System.out.println(new BigDecimal(res).divide(new BigDecimal(precision)).doubleValue());
 ////        System.out.println(res);
-        System.out.println(new BigDecimal(user.pai.decrypt(exyz)).divide(new BigDecimal(precision.multiply(precision))).doubleValue());
+        System.out.println(new BigDecimal(user.pai.decrypt(exz)).divide(new BigDecimal(precision)).doubleValue());
+        System.out.println(user.pai.decrypt(exz).divide(precision).doubleValue());
+        System.out.println(new BigFraction(user.pai.decrypt(exz).divide(precision).doubleValue()));
 
 //
     }

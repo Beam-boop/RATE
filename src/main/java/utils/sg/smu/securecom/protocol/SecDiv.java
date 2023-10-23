@@ -14,7 +14,7 @@ import java.util.Random;
  * Date: 2023/2/22
  */
 public class SecDiv {
-    public static BigInteger    secDiv_1(BigInteger ex, BigInteger ey, Paillier pai, PaillierThdDec cp,
+    public static BigInteger secDiv_1(BigInteger ex, BigInteger ey, Paillier pai, PaillierThdDec cp,
                                       PaillierThdDec csp) {
 
         // Step-1 turn c to user, [𝑐]←[𝑑]⋅[𝑣]^𝑟
@@ -30,54 +30,49 @@ public class SecDiv {
         // Step-3 [𝑑/𝑣]←[𝑐/𝑣]⋅[−𝑟]
 //        BigInteger nr = cp.getRandom().negate();
 //        BigInteger enr = pai.encrypt(nr);
-        return pai.add(ex, divRandom.get("enr"));
+        return pai.sub(ex, divRandom.get("er"));
     }
 
     public static void main(String[] args) {
 
-        int SIGMA = 128;//118;
-        int key_len = 128;
+        int SIGMA = 80;//118;
+        int key_len = 512;
         User user = new User(key_len);
-        BigInteger precision = BigInteger.valueOf(2).pow(106);
+        BigInteger precision = BigInteger.valueOf(2).shiftLeft(106);
 
-        double x = 12345.124;
-        int ix = 18608;
-        int y = 16;
+        int x;
+        int y;
 
-        for(int i =0; i<1;i++){
+        for (int i = 0; i < 100; i++) {
 
-            x = Math.abs(new Random().nextDouble())*100;
-            y = Math.abs(new Random().nextInt(100))+1;
-            ix = Math.abs(new Random().nextInt(10000))+1;
+            x = Math.abs(new Random().nextInt(10000));
+            y = Math.abs(new Random().nextInt(10000));
+//            x = 500;
+//            y = 10000;
             System.out.println(x + " " + y);
-            System.out.println(x / y);
-//            System.out.println(ix / y);
+            System.out.println("明文结果：" + x * 1.0 / y);
 
-            //double type approximates the integer type
-            BigInteger ex = user.pai.encrypt(new BigFraction(x).multiply(precision).getNumerator());
-//            BigInteger eix = user.pai.encrypt(BigInteger.valueOf(ix));
+            BigInteger ex = user.pai.encrypt(BigInteger.valueOf(x));
             BigInteger ey = user.pai.encrypt(BigInteger.valueOf(y));
 
             BigInteger temp = Utils.getRandom(SIGMA);
             user.cp.setRandom(temp);
             HashMap<String, BigInteger> divRandom = new HashMap<>();
-            divRandom.put("enr", user.pai.encrypt(temp.negate()));
-
-            BigInteger c = secDiv_1(ex, ey, user.pai, user.cp, user.csp);
-//            BigInteger ic = secDiv_1(eix, ey, user.pai, user.cp, user.csp);
+            divRandom.put("er", user.pai.encrypt(temp.multiply(precision)));
+            // Step-1 turn c to user, [𝑐]←[𝑑]⋅[𝑣]^𝑟
+            BigInteger cm = user.pai.add(ex, user.pai.multiply(ey, user.cp.getRandom()));
+            BigInteger c1 = user.cp.partyDecrypt(cm);
+            BigInteger c2 = user.csp.partyDecrypt(cm);
+            BigInteger c = user.csp.finalDecrypt(c1, c2);
 
             //Step-2 [𝑐/𝑣]
-            BigInteger cv = c.divide(BigInteger.valueOf(y));
-//            BigInteger icv = ic.divide(BigInteger.valueOf(y));
+            BigDecimal cv = new BigDecimal(c).divide(new BigDecimal(y), 15, BigDecimal.ROUND_CEILING).multiply(new BigDecimal(precision));
+            BigInteger ecv = user.pai.encrypt(cv.toBigInteger().mod((user.pai.getPublicKey().getN())));
 
-//            BigInteger eres = secDiv_2(user.pai.encrypt(icv), user.pai, divRandom);
-            BigInteger edres = secDiv_2(user.pai.encrypt(cv), user.pai, divRandom);
+            BigInteger edres = user.pai.sub(ecv, divRandom.get("er"));
 
             user.pai.setDecryption(user.prikey);
-//            BigInteger res = user.pai.decrypt(eres);
-            BigInteger dres = user.pai.decrypt(edres);
-            System.out.println(new BigDecimal(dres).divide(new BigDecimal(precision)).doubleValue());
-//            System.out.println(res);
+            System.out.println("密文解密后结果：" + new BigDecimal(user.pai.decrypt(edres)).divide(new BigDecimal(precision)).doubleValue());
             System.out.println("---");
         }
     }

@@ -62,7 +62,7 @@ public class SecAbs {
 
     public static void main(String[] args) {
         int sigma = 128;
-        User user = new User(2048);
+        User user = new User(128);
         HashMap<String, BigInteger> randomRestore = new HashMap<String, BigInteger>();
         BigInteger mid = user.pai.getPublicKey().getMid();
         BigInteger r1 = Utils.getRandom(sigma);
