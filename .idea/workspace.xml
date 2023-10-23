@@ -10,15 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07594db0-94f5-4427-b2e0-44226596cf8e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/HW.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/alogorithmTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/RATE_jar/RATE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/RATE_jar2/RATE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/result.csv" beforeDir="false" afterPath="$PROJECT_DIR$/result.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecAbs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecAbs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecDiv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecDiv.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecMul.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/sg/smu/securecom/protocol/SecMul.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/result.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +33,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 7
+}]]></component>
   <component name="ProjectId" id="2SXZzsrigkauDEQPWYvQYwlv4VZ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -53,11 +52,17 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "E:/SC-xidian/SC-Beam/RATE_ITC",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15332031",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "rsyncConfigurable"
+    "settings.editor.selected.configurable": "rsyncConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -138,17 +143,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.HW" />
       <item itemvalue="Application.alogorithmTest" />
@@ -197,6 +191,7 @@
       <workItem from="1697112852414" duration="99000" />
       <workItem from="1697121060319" duration="6199000" />
       <workItem from="1697183338648" duration="4627000" />
+      <workItem from="1698029659346" duration="324000" />
     </task>
     <servers />
   </component>
