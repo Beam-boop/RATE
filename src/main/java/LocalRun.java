@@ -20,7 +20,7 @@ public class LocalRun {
         double[] alphaArr = new double[]{1};
         double[] betaArr = new double[]{0.2, 0.4, 0.6, 0.8, 1.0};
         int[] velArr = new int[]{1, 2, 4, 5, 11, 22};
-        int[] numArr = new int[]{10, 20, 40, 50, 70, 100};
+        int[] numArr = new int[]{3, 20, 40, 50, 70, 100};
         int[] keyArr = new int[]{128, 512, 768, 1024, 1280};
         int taskTime = 600;
         Utils.csvHead();
@@ -121,13 +121,13 @@ public class LocalRun {
         //vel=22 B=500
         //rate dp ga
         //keylen=128
-        int[] keyIndex = new int[]{1, 2};
+        int[] keyIndex = new int[]{0, 1};
 
         System.out.println("------------------------------------ratio beta/alpha--------------------------------------");
         int[] alphaIndex = new int[]{0, 1};
-        int[] betaIndex = new int[]{0, 5};
+        int[] betaIndex = new int[]{4, 5};
         int[] budgetTDrive = new int[]{750, 750, 1};
-        int[] numIndex = new int[]{3, 4};
+        int[] numIndex = new int[]{0, 1};
 
 
         runTDrive(alphaIndex, betaIndex, budgetTDrive, keyIndex, numIndex);

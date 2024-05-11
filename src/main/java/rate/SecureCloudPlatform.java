@@ -78,7 +78,7 @@ public class SecureCloudPlatform {
     public void calculateServiceTime() throws ExecutionException, InterruptedException {
         HashMap<String, BigInteger> divRandom = new HashMap<>();
         BigInteger temp = Utils.getRandom(SIGMA);
-        divRandom.put("enr", pai.encrypt(temp.negate()));
+        divRandom.put("er", pai.encrypt(temp));
         cp.setRandom(temp);
 
         ExecutorService executor = Executors.newFixedThreadPool(100);
@@ -104,6 +104,25 @@ public class SecureCloudPlatform {
 
                 return new Pair(BigInteger.valueOf(flg), pai.sub(eTaskTime, dv));
             }, executor);
+
+//            BigInteger eLong = SecAbs.secAbs(eStartLocs.get(i).get(0), eTaskLoc[0], pai, cp, csp, randomRestore);
+//            BigInteger eLat = SecAbs.secAbs(eStartLocs.get(i).get(1), eTaskLoc[1], pai, cp, csp, randomRestore);
+//            // turn c to worker
+//            BigInteger c = SecDiv.secDiv_1(pai.add(eLong, eLat), eVel.get(i), pai, cp, csp);
+//
+//            //transmit [c/v] to cp
+//            BigInteger ecv = tp.getEcv(c, i);
+//
+//            //calculate the [d/v]
+//            BigInteger dv = SecDiv.secDiv_2(ecv, pai, divRandom);
+//
+//            // phase two: Calculate service Times with the space-time constrains.
+//            int flg = SecCmp.secCmp(dv, eTaskTime, pai, cp, csp, randomRestore);
+//
+//            //test
+//            if (flg == 1) {
+//                eServeTimes.add(pai.sub(eTaskTime, dv));
+//            }
         }
         for (int i = 0; i < temps.length; i++) {
             Pair tmp = temps[i].get();
