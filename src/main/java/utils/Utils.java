@@ -207,19 +207,19 @@ public class Utils {
         }
     }
 
-    public static void writeResultToCsv(String dataMode, String solutionMode, double alpha, double beta, int number, int B, int request, int worker, int requestTime, int workerTime, int cpTime, int keyLen) throws Exception {
+    public static void writeResultToCsv(String dataMode, String solutionMode, double alpha, int number, int B, double participantWelfare, int requesterRevenue, int requestTime, int workerTime, int cpTime, int keyLen) throws Exception {
         HashMap<String, String> resultMap = new HashMap<>();
         resultMap.put("dataMode", dataMode);
         resultMap.put("solutionMode", solutionMode);
-        if (alpha == 0 && beta == 0) {
+        if (alpha == 0) {
             resultMap.put("ratio", "---");
         } else {
-            resultMap.put("ratio", String.valueOf((float) beta / (float) alpha));
+            resultMap.put("ratio", String.valueOf(alpha));
         }
         resultMap.put("number", String.valueOf(number));
         resultMap.put("B", String.valueOf(B));
-        resultMap.put("TR benefit", String.valueOf(request));
-        resultMap.put("TPs benefit", String.valueOf(worker));
+        resultMap.put("TR benefit", String.valueOf(requesterRevenue));
+        resultMap.put("TPs welfare", String.valueOf(participantWelfare));
         resultMap.put("TR time", String.valueOf(requestTime));
         resultMap.put("TPs time", String.valueOf(workerTime));
         resultMap.put("cp time", String.valueOf(cpTime));

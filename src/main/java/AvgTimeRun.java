@@ -48,8 +48,8 @@ public class AvgTimeRun {
                                 SecureTaskParticipants tp = new SecureTaskParticipants(velArr, filenameItem + numArr[i] + ".csv", true);
                                 long twoTime = System.currentTimeMillis();
                                 //set CP and CSP
-                                SecureCloudPlatform cp = new SecureCloudPlatform(alphaArr[n], betaArr[m], tr, tp);
-                                int[] message = cp.solve();
+                                SecureCloudPlatform cp = new SecureCloudPlatform(alphaArr[n], tr, tp);
+                                Number[] message = cp.solve();
                                 long endTime = System.currentTimeMillis();
                                 System.out.println("------------------------------------------");
                                 requesterTime[t] = (int) (endTime - startTime);

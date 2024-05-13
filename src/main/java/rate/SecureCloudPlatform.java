@@ -3,6 +3,7 @@ package rate;
 import utils.sg.smu.securecom.protocol.*;
 import utils.sg.smu.securecom.utils.Good;
 import utils.sg.smu.securecom.utils.Pair;
+import utils.sg.smu.securecom.utils.Solution;
 import utils.sg.smu.securecom.utils.Utils;
 
 import java.math.BigInteger;
@@ -31,9 +32,11 @@ public class SecureCloudPlatform {
     //receive the vel
     protected List<BigInteger> eVel;
     public List<BigInteger> eServeTimes = new ArrayList<>();
+    protected List<BigInteger> eCost = new ArrayList<>();
+    protected List<Integer> payments = new ArrayList<>();
     ArrayList<Good> goods;
     protected double alpha;
-    protected double beta;
+    protected double avgCost;
     protected int numOfThings;
 
     int numberOfParticipants;
@@ -42,18 +45,19 @@ public class SecureCloudPlatform {
     /**
      * dynamic programming array
      */
-    int[][] dp;
+    Solution[][] dp;
     //offline
     public HashMap<String, BigInteger> randomRestore = new HashMap<String, BigInteger>();
     //receive the sk1 and sk2
     protected PaillierThdDec cp = SecureTaskRequester.getCp();
     protected PaillierThdDec csp = SecureTaskRequester.getCsp();
     protected Paillier pai = SecureTaskRequester.getPai();
-
     SecureTaskRequester tr = null;
     SecureTaskParticipants tp = null;
+    double participantsWelfare;
+    int requesterRevenue;
 
-    public SecureCloudPlatform(double a, double b, SecureTaskRequester r, SecureTaskParticipants p) throws ExecutionException, InterruptedException {
+    public SecureCloudPlatform(double a, SecureTaskRequester r, SecureTaskParticipants p) throws ExecutionException, InterruptedException {
         tr = r;
         tp = p;
 
@@ -62,15 +66,14 @@ public class SecureCloudPlatform {
         eTaskLoc = tr.eTaskLoc;
 
         eStartLocs = tp.eStartLocs;
+        eCost = tp.eCost;
 
         numberOfParticipants = eStartLocs.size();
         eVel = tp.eVel;
         goods = new ArrayList<>();
 
         alpha = a;
-        beta = b;
         System.out.println("alpha is: " + a);
-        System.out.println("beta is: " + b);
         secCmpRandom();
     }
 
@@ -127,19 +130,21 @@ public class SecureCloudPlatform {
         for (int i = 0; i < temps.length; i++) {
             Pair tmp = temps[i].get();
             if (tmp.getKey().equals(BigInteger.ONE)) {
+                //将选中的TP的支付信息加入到支付列表中
+                payments.add(tp.payments.get(i));
                 eServeTimes.add((BigInteger) tmp.getValue());
             }
         }
         executor.shutdown();
         //decrypt service Times
-        for (BigInteger eServeTime : eServeTimes) {
-            int serviceTimes = Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eServeTime), csp.partyDecrypt(eServeTime))));
-            goods.add(new Good(((int)(serviceTimes * alpha)), ((int)(serviceTimes * beta))));
+        for (int i = 0; i < eServeTimes.size(); i++) {
+            int serviceTimes = Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eServeTimes.get(i)), csp.partyDecrypt(eServeTimes.get(i)))));
+            goods.add(new Good((payments.get(i)), ((int) (serviceTimes * alpha))));
         }
         numOfThings = goods.size();
         System.out.println("number of TPs " + numberOfParticipants);
         System.out.println("budget of task " + capOfPack);
-        dp = new int[numOfThings + 1][capOfPack + 1];
+        dp = new Solution[numOfThings + 1][capOfPack + 1];
     }
 
     //calculate the result via dp
@@ -172,55 +177,48 @@ public class SecureCloudPlatform {
      *
      * @return dp Array
      */
-    public int dpCalculate() {
-//        for (int i = 0; i < numOfThings; i++) {
-//            int w = goods.get(i).weight, v = goods.get(i).value;
-//            for (int j = capOfPack; j >= w; j--) {
-//                int temp = dp[j - w] + v;
-//                if (temp > dp[j]) {
-//                    dp[j] = temp;
-//                }
-//            }
-//        }
-        for (int i = 1; i <= numOfThings; i++) {
-            int w = goods.get(i - 1).weight, v = goods.get(i - 1).value;
-            for (int j = 1; j <= capOfPack; j++) {
-                if (j < w) {
-                    dp[i][j] = dp[i - 1][j];
+    public void resultCalculate() {
+        for (int i = 0; i <= numOfThings; i++) {
+            for (int j = 0; j <= capOfPack; j++) {
+                if (i == 0 || j == 0) {
+                    dp[i][j] = new Solution(0, 0);
+                } else if (goods.get(i - 1).weight <= j) {
+                    int valNew = dp[i - 1][j - goods.get(i - 1).weight].totalValue + goods.get(i - 1).value;
+                    int countNew = dp[i - 1][j - goods.get(i - 1).weight].itemCount + 1;
+//                    List<Good> goodsNew = new ArrayList<>(dp[i-1][j-goods.get(i-1).weight].goods);
+//                    goodsNew.add(goods.get(i-1));
+                    if (dp[i - 1][j].totalValue < valNew || (dp[i - 1][j].totalValue == valNew && dp[i - 1][j].itemCount > countNew)) {
+                        dp[i][j] = new Solution(valNew, countNew);
+                    } else {
+                        dp[i][j] = dp[i - 1][j];
+                    }
                 } else {
-                    int temp = dp[i - 1][j - w] + v;
-                    dp[i][j] = Math.max(temp, dp[i - 1][j]);
+                    dp[i][j] = dp[i - 1][j];
                 }
             }
         }
-        System.out.println("TR benefit is :" + dp[numOfThings][capOfPack]);
-        return dp[numOfThings][capOfPack];
-    }
-
-    public int chooseItems() {
-        int[] selectTps = new int[numOfThings];
-        int j = capOfPack;
-        for (int i = numOfThings; i > 0; i--) {
-            int w = goods.get(i - 1).weight;
-            if (j - w < 0)
-                continue;
-            if (dp[i][j] > dp[i - 1][j]) {
-                selectTps[i - 1] = 1;
-                j -= w;
-            }
-        }
-        int tpBenefit = 0;
-        for (int i = 0; i < selectTps.length; i++) {
-            if (selectTps[i] == 1)
-                tpBenefit += goods.get(i).weight;
-        }
-        System.out.println("TPs benefit is:" + tpBenefit);
-        return tpBenefit;
+        requesterRevenue = dp[numOfThings][capOfPack].totalValue - capOfPack;
+        participantsWelfare = capOfPack - dp[numOfThings][capOfPack].itemCount * avgCost;
+        System.out.println("requesterRevenue is: " + requesterRevenue);
+        System.out.println("participantsWelfare is: " + participantsWelfare);
+        System.out.println("chosen TPs are: " + dp[numOfThings][capOfPack].itemCount);
+        System.out.println("avgCost is: " + avgCost);
     }
 
     //return numOfThings, capOfPack, requesterBenefit, workerBenefit, time, time - decryptTime[1], time - decryptTime[0], keyLen
-    public int[] solve() throws ExecutionException, InterruptedException {
+    public Number[] solve() throws ExecutionException, InterruptedException {
         calculateServiceTime();
-        return new int[]{numberOfParticipants, capOfPack, dpCalculate(), chooseItems()};
+        calculateAvgCost();
+        resultCalculate();
+        return new Number[]{numberOfParticipants, capOfPack, participantsWelfare, requesterRevenue};
+    }
+
+    private void calculateAvgCost() {
+        BigInteger eSum = eCost.get(0);
+        for (int i = 1; i < eCost.size(); i++) {
+            eSum = pai.add(eSum, eCost.get(i));
+        }
+        int sum = Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eSum), csp.partyDecrypt(eSum))));
+        avgCost = (double) sum / (double) eCost.size();
     }
 }

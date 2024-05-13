@@ -30,11 +30,17 @@ public class SecureTaskParticipants {
      * the location of enter system
      */
     protected List<List<Double>> startLocs = new ArrayList<>();
+    /**
+     * the cost and payment of the task
+     */
+    protected List<Integer> costs = new ArrayList<>();
+    protected List<Integer> payments = new ArrayList<>();
 
     /**
      * the encrypted location of enter system
      */
     protected List<List<BigInteger>> eStartLocs = new ArrayList<>();
+    protected List<BigInteger> eCost = new ArrayList<>();
     public List<Integer> vel;
     private static final int NUMBER = 111000;
     String pathItem = null;
@@ -72,8 +78,6 @@ public class SecureTaskParticipants {
         //KGC send the paillier to SecureTaskRequester
         pai = SecureTaskRequester.getPai();
 
-
-
         ExecutorService executor = Executors.newFixedThreadPool(100);
         CompletableFuture<Pair>[] temps = new CompletableFuture[startLocs.size()];
         for (int i = 0; i < startLocs.size(); i++) {
@@ -93,6 +97,9 @@ public class SecureTaskParticipants {
             eStartLoc.add((BigInteger) tmp.getValue());
             eStartLocs.add(eStartLoc);
         }
+        for (int i = 0; i < costs.size(); i++) {
+            eCost.add(pai.encrypt(BigInteger.valueOf(costs.get(i))));
+        }
     }
 
     private void readData() {
@@ -107,6 +114,8 @@ public class SecureTaskParticipants {
                 startLoc.add(Double.valueOf(line[1].split("'")[1]));
                 startLoc.add(Double.valueOf(line[2].split("'")[1]));
                 startLocs.add(startLoc);
+                costs.add(Integer.valueOf(line[3]));
+                payments.add(Integer.valueOf(line[4]));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
