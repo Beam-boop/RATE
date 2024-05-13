@@ -13,6 +13,8 @@ import java.util.concurrent.ExecutionException;
  * Computing Service platform: provides online computation services
  */
 public class CloudPlatform {
+    protected List<Integer> costs;
+    protected List<Integer> payments;
     //receive the task position
     protected List<Integer> taskLoc = null;
     protected List<Integer> serviceTimes = new ArrayList<>();
@@ -24,7 +26,6 @@ public class CloudPlatform {
     protected List<Integer> vel;
     ArrayList<Good> goods;
     protected double alpha;
-    protected double beta;
     protected int numOfThings;
     public int numOfParticipants;
     //receive the budget
@@ -37,7 +38,7 @@ public class CloudPlatform {
     TaskRequester tr = null;
     TaskParticipants tp = null;
 
-    public CloudPlatform(double a, double b, TaskRequester r, TaskParticipants p) {
+    public CloudPlatform(double a, TaskRequester r, TaskParticipants p) {
         tr = r;
         tp = p;
 
@@ -49,11 +50,11 @@ public class CloudPlatform {
         numOfParticipants = startLocs.size();
         vel = tp.vel;
         goods = new ArrayList<>();
+        costs = p.costs;
+        payments = p.payments;
 
         alpha = a;
-        beta = b;
         System.out.println("alpha is: " + a);
-        System.out.println("beta is: " + b);
     }
 
     //calculate the service time
@@ -67,8 +68,9 @@ public class CloudPlatform {
 
         }
 
-        for (int serviceTime : serviceTimes) {
-            goods.add(new Good((int) (serviceTime * alpha), (int) (serviceTime * beta)));
+        for (int i = 0; i < serviceTimes.size(); i++) {
+            goods.add(new Good(payments.get(i), (int) (serviceTimes.get(i) * alpha)));
+            System.out.println("service time is: " + serviceTimes.get(i) + " payment is: " + payments.get(i));
         }
 
         numOfThings = goods.size();
@@ -108,8 +110,8 @@ public class CloudPlatform {
                 }
             }
         }
-        System.out.println("TR benefit is :" + dp[numOfThings][capOfPack]);
-        return dp[numOfThings][capOfPack];
+        System.out.println("TR benefit is :" + (dp[numOfThings][capOfPack]-capOfPack));
+        return dp[numOfThings][capOfPack]-capOfPack;
     }
 
     public int chooseItems() {
@@ -117,8 +119,9 @@ public class CloudPlatform {
         int j = capOfPack;
         for (int i = numOfThings; i > 0; i--) {
             int w = goods.get(i - 1).weight;
-            if (j - w < 0)
+            if (j - w < 0) {
                 continue;
+            }
             if (dp[i][j] > dp[i - 1][j]) {
                 selectTps[i - 1] = 1;
                 j -= w;
@@ -126,8 +129,9 @@ public class CloudPlatform {
         }
         int tpBenefit = 0;
         for (int i = 0; i < selectTps.length; i++) {
-            if (selectTps[i] == 1)
+            if (selectTps[i] == 1) {
                 tpBenefit += goods.get(i).weight;
+            }
         }
         System.out.println("TPs benefit is:" + tpBenefit);
         return tpBenefit;

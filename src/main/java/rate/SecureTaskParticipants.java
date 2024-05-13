@@ -2,6 +2,7 @@ package rate;
 
 import utils.sg.smu.securecom.protocol.Paillier;
 import utils.sg.smu.securecom.utils.Pair;
+import utils.sg.smu.securecom.utils.Pair2;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -79,19 +80,19 @@ public class SecureTaskParticipants {
         pai = SecureTaskRequester.getPai();
 
         ExecutorService executor = Executors.newFixedThreadPool(100);
-        CompletableFuture<Pair>[] temps = new CompletableFuture[startLocs.size()];
+        CompletableFuture<Pair2>[] temps = new CompletableFuture[startLocs.size()];
         for (int i = 0; i < startLocs.size(); i++) {
             final int ij = i;
             eVel.add(pai.encrypt(BigInteger.valueOf(vel.get(i))));
             temps[i] = CompletableFuture.supplyAsync(() -> {
                 int temp1 = (int) Math.round(startLocs.get(ij).get(0) * NUMBER);
                 int temp2 = (int) Math.round(startLocs.get(ij).get(1) * NUMBER);
-                return new Pair(pai.encrypt(BigInteger.valueOf(temp1)), pai.encrypt(BigInteger.valueOf(temp2)));
+                return new Pair2(pai.encrypt(BigInteger.valueOf(temp1)), pai.encrypt(BigInteger.valueOf(temp2)));
             }, executor);
         }
         executor.shutdown();
         for (int i = 0; i < temps.length; i++) {
-            Pair tmp = temps[i].get();
+            Pair2 tmp = temps[i].get();
             List<BigInteger> eStartLoc = new ArrayList<>();
             eStartLoc.add((BigInteger) tmp.getKey());
             eStartLoc.add((BigInteger) tmp.getValue());

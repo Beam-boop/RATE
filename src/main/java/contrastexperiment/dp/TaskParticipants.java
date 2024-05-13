@@ -31,6 +31,9 @@ public class TaskParticipants {
     private static final int NUMBER = 111000;
     String pathItem = null;
 
+    List<Integer> costs = new ArrayList<>();
+    List<Integer> payments = new ArrayList<>();
+
 
     public TaskParticipants() {
 
@@ -56,6 +59,8 @@ public class TaskParticipants {
                 startLoc.add((int) (Double.valueOf(line[1].split("'")[1]) * NUMBER));
                 startLoc.add((int) (Double.valueOf(line[2].split("'")[1])* NUMBER));
                 startLocs.add(startLoc);
+                costs.add(Integer.valueOf(line[3]));
+                payments.add(Integer.valueOf(line[4]));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

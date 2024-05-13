@@ -82,7 +82,7 @@ public class AvgTimeRun {
                             TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
                             TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv", false);
                             //set CP and CSP
-                            CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
+                            CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
                             int[] message = cp.solve();
                             long endTime = System.currentTimeMillis();
                             time[t] = (int) (endTime - startTime);
@@ -108,7 +108,7 @@ public class AvgTimeRun {
                         TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
                         TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv", false);
                         //set CP and CSP
-                        CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
+                        CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
                         List<Integer> serveTimes = cp.calculateServiceTime();
                         int numOfParticipants = cp.numOfParticipants;
                         int numOfThing = serveTimes.size();

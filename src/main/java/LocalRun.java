@@ -50,30 +50,28 @@ public class LocalRun {
             }
         }
         Utils.Text2csv();
-//        System.out.println("---------------------------dp-------------------------");
-//        for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
-//            for (int m = betaIndex[0]; m < betaIndex[1]; m++) {
-//                for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
-//                    for (int i = numIndex[0]; i < numIndex[1]; i++) {
-//                        long startTime = System.currentTimeMillis();
-//                        //set TP and TR
-//                        TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
-//                        long oneTime = System.currentTimeMillis();
-//                        TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv", false);
-//                        long twoTime = System.currentTimeMillis();
-//                        //set CP and CSP
-//                        CloudPlatform cp = new CloudPlatform(alphaArr[n], betaArr[m], tr, tp);
-//                        int[] message = cp.solve();
-//                        long endTime = System.currentTimeMillis();
-//                        System.out.println("------------------------------------------");
-//                        Utils.writeResultToCsv("TDrive", "DP", alphaArr[n], betaArr[m], message[0],
-//                                message[1], message[2], message[3], (int) (endTime - startTime), (int) (twoTime - oneTime), (int) (endTime - twoTime), 0);
-//
-//                    }
-//                }
-//            }
-//        }
-//        Utils.Text2csv();
+        System.out.println("---------------------------dp-------------------------");
+        for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
+            for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+                for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                    long startTime = System.currentTimeMillis();
+                    //set TP and TR
+                    TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
+                    long oneTime = System.currentTimeMillis();
+                    TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + "-new.csv", false);
+                    long twoTime = System.currentTimeMillis();
+                    //set CP and CSP
+                    CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
+                    int[] message = cp.solve();
+                    long endTime = System.currentTimeMillis();
+                    System.out.println("------------------------------------------");
+                    Utils.writeResultToCsv("TDrive", "DP", alphaArr[n], message[0],
+                            message[1], message[2], message[3], (int) (endTime - startTime), (int) (twoTime - oneTime), (int) (endTime - twoTime), 0);
+
+                }
+            }
+        }
+        Utils.Text2csv();
 //
 //        System.out.println("-------------------ga--------------------");
 //        for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
@@ -122,7 +120,7 @@ public class LocalRun {
         int[] keyIndex = new int[]{0, 1};
 
         System.out.println("------------------------------------ratio alpha--------------------------------------");
-        int[] alphaIndex = new int[]{0, 5};
+        int[] alphaIndex = new int[]{0, 1};
         int[] budgetTDrive = new int[]{2000, 2000, 1};
         int[] numIndex = new int[]{0, 1};
 
@@ -137,7 +135,7 @@ public class LocalRun {
         alphaIndex = new int[]{0, 1};
         budgetTDrive = new int[]{2000, 2000, 1};
         int[] budgetKnap = new int[]{997, 997, 1};
-        numIndex = new int[]{0, 6};
+        numIndex = new int[]{1, 2};
 
         runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
 //        runKanp(budgetKnap, velIndex, keyIndex);

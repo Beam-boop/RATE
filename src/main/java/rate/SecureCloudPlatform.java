@@ -71,6 +71,7 @@ public class SecureCloudPlatform {
         numberOfParticipants = eStartLocs.size();
         eVel = tp.eVel;
         goods = new ArrayList<>();
+        payments = tp.payments;
 
         alpha = a;
         System.out.println("alpha is: " + a);
@@ -105,7 +106,7 @@ public class SecureCloudPlatform {
                 // phase two: Calculate service Times with the space-time constrains.
                 int flg = SecCmp.secCmp(dv, eTaskTime, pai, cp, csp, randomRestore);
 
-                return new Pair(BigInteger.valueOf(flg), pai.sub(eTaskTime, dv));
+                return new Pair(BigInteger.valueOf(flg), pai.sub(eTaskTime, dv), payments.get(ij));
             }, executor);
 
 //            BigInteger eLong = SecAbs.secAbs(eStartLocs.get(i).get(0), eTaskLoc[0], pai, cp, csp, randomRestore);
@@ -127,19 +128,21 @@ public class SecureCloudPlatform {
 //                eServeTimes.add(pai.sub(eTaskTime, dv));
 //            }
         }
+        executor.shutdown();
+
         for (int i = 0; i < temps.length; i++) {
             Pair tmp = temps[i].get();
             if (tmp.getKey().equals(BigInteger.ONE)) {
                 //将选中的TP的支付信息加入到支付列表中
-                payments.add(tp.payments.get(i));
-                eServeTimes.add((BigInteger) tmp.getValue());
+                payments.add((int) tmp.getValue2());
+                eServeTimes.add((BigInteger) tmp.getValue1());
             }
         }
-        executor.shutdown();
         //decrypt service Times
         for (int i = 0; i < eServeTimes.size(); i++) {
             int serviceTimes = Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eServeTimes.get(i)), csp.partyDecrypt(eServeTimes.get(i)))));
             goods.add(new Good((payments.get(i)), ((int) (serviceTimes * alpha))));
+            System.out.println("service time is: " + serviceTimes + " payment is: " + payments.get(i));
         }
         numOfThings = goods.size();
         System.out.println("number of TPs " + numberOfParticipants);
