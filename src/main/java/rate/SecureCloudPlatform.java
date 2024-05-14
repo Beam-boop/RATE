@@ -108,9 +108,18 @@ public class SecureCloudPlatform {
 
                 return new Pair(BigInteger.valueOf(flg), pai.sub(eTaskTime, dv), payments.get(ij));
             }, executor);
-
 //            BigInteger eLong = SecAbs.secAbs(eStartLocs.get(i).get(0), eTaskLoc[0], pai, cp, csp, randomRestore);
+//            System.out.println("test:"+Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eStartLocs.get(i).get(0)), csp.partyDecrypt(eStartLocs.get(i).get(0))))));
+//            System.out.println("test:"+Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eTaskLoc[0]), csp.partyDecrypt(eTaskLoc[0])))));
+//            System.out.println("test:"+Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eLong), csp.partyDecrypt(eLong)))));
+//
 //            BigInteger eLat = SecAbs.secAbs(eStartLocs.get(i).get(1), eTaskLoc[1], pai, cp, csp, randomRestore);
+//            System.out.println("test:"+Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eStartLocs.get(i).get(1)), csp.partyDecrypt(eStartLocs.get(i).get(1))))));
+//            System.out.println("test:"+Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eTaskLoc[1]), csp.partyDecrypt(eTaskLoc[1])))));
+//            System.out.println("test:"+Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eLat), csp.partyDecrypt(eLat)))));
+//
+//            BigInteger a = pai.add(eLong, eLat);
+//            System.out.println("test:"+Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(a), csp.partyDecrypt(a)))));
 //            // turn c to worker
 //            BigInteger c = SecDiv.secDiv_1(pai.add(eLong, eLat), eVel.get(i), pai, cp, csp);
 //
@@ -126,6 +135,7 @@ public class SecureCloudPlatform {
 //            //test
 //            if (flg == 1) {
 //                eServeTimes.add(pai.sub(eTaskTime, dv));
+//                payments.add(tp.payments.get(i));
 //            }
         }
         executor.shutdown();
@@ -142,7 +152,6 @@ public class SecureCloudPlatform {
         for (int i = 0; i < eServeTimes.size(); i++) {
             int serviceTimes = Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eServeTimes.get(i)), csp.partyDecrypt(eServeTimes.get(i)))));
             goods.add(new Good((payments.get(i)), ((int) (serviceTimes * alpha))));
-            System.out.println("service time is: " + serviceTimes + " payment is: " + payments.get(i));
         }
         numOfThings = goods.size();
         System.out.println("number of TPs " + numberOfParticipants);

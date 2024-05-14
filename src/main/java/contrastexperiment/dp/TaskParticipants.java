@@ -58,6 +58,7 @@ public class TaskParticipants {
                 String[] line = temp.split(",");
                 startLoc.add((int) (Double.valueOf(line[1].split("'")[1]) * NUMBER));
                 startLoc.add((int) (Double.valueOf(line[2].split("'")[1])* NUMBER));
+//                System.out.println(startLoc.get(0) + " " + startLoc.get(1));
                 startLocs.add(startLoc);
                 costs.add(Integer.valueOf(line[3]));
                 payments.add(Integer.valueOf(line[4]));

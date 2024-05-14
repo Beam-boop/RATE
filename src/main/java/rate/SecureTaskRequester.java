@@ -111,8 +111,8 @@ public class SecureTaskRequester {
     private void encryptInformation() {
         eTaskTime = pai.encrypt(BigInteger.valueOf(taskTime));
 
-        int c = (int) Math.round(taskLoc.get(0) * NUMBER);
-        int d = (int) Math.round(taskLoc.get(1) * NUMBER);
+        int c = (int) (taskLoc.get(0) * NUMBER);
+        int d = (int) (taskLoc.get(1) * NUMBER);
         eTaskLoc[0] = pai.encrypt(BigInteger.valueOf(c));
         eTaskLoc[1] = pai.encrypt(BigInteger.valueOf(d));
     }

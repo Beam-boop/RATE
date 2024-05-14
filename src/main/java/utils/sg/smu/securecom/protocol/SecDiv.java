@@ -45,8 +45,8 @@ public class SecDiv {
 
         for (int i = 0; i < 100; i++) {
 
-            x = Math.abs(new Random().nextInt(10000));
-            y = Math.abs(new Random().nextInt(10000));
+            x = 34;
+            y = 1;
 //            x = 500;
 //            y = 10000;
             System.out.println(x + " " + y);

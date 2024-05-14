@@ -59,7 +59,7 @@ public class CloudPlatform {
 
     //calculate the service time
     public List<Integer> calculateServiceTime() {
-        for (int i = 0; i< startLocs.size();i++) {
+        for (int i = 0; i < startLocs.size(); i++) {
             int arrivalTime = (Math.abs(startLocs.get(i).get(0) - taskLoc.get(0)) + Math.abs(startLocs.get(i).get(1) - taskLoc.get(1))) / vel.get(i);
             int serviceTime = taskTime - arrivalTime;
             if (serviceTime > 0) {
@@ -70,7 +70,6 @@ public class CloudPlatform {
 
         for (int i = 0; i < serviceTimes.size(); i++) {
             goods.add(new Good(payments.get(i), (int) (serviceTimes.get(i) * alpha)));
-            System.out.println("service time is: " + serviceTimes.get(i) + " payment is: " + payments.get(i));
         }
 
         numOfThings = goods.size();
@@ -110,8 +109,8 @@ public class CloudPlatform {
                 }
             }
         }
-        System.out.println("TR benefit is :" + (dp[numOfThings][capOfPack]-capOfPack));
-        return dp[numOfThings][capOfPack]-capOfPack;
+        System.out.println("TR benefit is :" + (dp[numOfThings][capOfPack] - capOfPack));
+        return dp[numOfThings][capOfPack] - capOfPack;
     }
 
     public int chooseItems() {

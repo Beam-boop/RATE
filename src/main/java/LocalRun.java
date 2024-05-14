@@ -120,7 +120,7 @@ public class LocalRun {
         int[] keyIndex = new int[]{0, 1};
 
         System.out.println("------------------------------------ratio alpha--------------------------------------");
-        int[] alphaIndex = new int[]{0, 1};
+        int[] alphaIndex = new int[]{0, 5};
         int[] budgetTDrive = new int[]{2000, 2000, 1};
         int[] numIndex = new int[]{0, 1};
 
@@ -135,7 +135,7 @@ public class LocalRun {
         alphaIndex = new int[]{0, 1};
         budgetTDrive = new int[]{2000, 2000, 1};
         int[] budgetKnap = new int[]{997, 997, 1};
-        numIndex = new int[]{1, 2};
+        numIndex = new int[]{0, 6};
 
         runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
 //        runKanp(budgetKnap, velIndex, keyIndex);

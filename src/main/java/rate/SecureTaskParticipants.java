@@ -85,8 +85,8 @@ public class SecureTaskParticipants {
             final int ij = i;
             eVel.add(pai.encrypt(BigInteger.valueOf(vel.get(i))));
             temps[i] = CompletableFuture.supplyAsync(() -> {
-                int temp1 = (int) Math.round(startLocs.get(ij).get(0) * NUMBER);
-                int temp2 = (int) Math.round(startLocs.get(ij).get(1) * NUMBER);
+                int temp1 = (int) (startLocs.get(ij).get(0) * NUMBER);
+                int temp2 = (int) (startLocs.get(ij).get(1) * NUMBER);
                 return new Pair2(pai.encrypt(BigInteger.valueOf(temp1)), pai.encrypt(BigInteger.valueOf(temp2)));
             }, executor);
         }
