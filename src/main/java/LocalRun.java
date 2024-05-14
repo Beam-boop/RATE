@@ -62,11 +62,11 @@ public class LocalRun {
                     long twoTime = System.currentTimeMillis();
                     //set CP and CSP
                     CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
-                    int[] message = cp.solve();
+                    Number[] message = cp.solve();
                     long endTime = System.currentTimeMillis();
                     System.out.println("------------------------------------------");
-                    Utils.writeResultToCsv("TDrive", "DP", alphaArr[n], message[0],
-                            message[1], message[2], message[3], (int) (endTime - startTime), (int) (twoTime - oneTime), (int) (endTime - twoTime), 0);
+                    Utils.writeResultToCsv("TDrive", "DP", alphaArr[n], (int) message[0],
+                            (int) message[1], (double) message[2], (int) message[3], (int) (endTime - startTime), (int) (twoTime - oneTime), (int) (endTime - twoTime), 0);
 
                 }
             }
