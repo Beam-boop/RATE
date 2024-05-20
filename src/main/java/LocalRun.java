@@ -1,13 +1,10 @@
 import contrastexperiment.dp.CloudPlatform;
 import contrastexperiment.dp.TaskParticipants;
 import contrastexperiment.dp.TaskRequester;
-import contrastexperiment.ga.GeneticAlgorithm;
 import rate.SecureCloudPlatform;
 import rate.SecureTaskParticipants;
 import rate.SecureTaskRequester;
 import utils.Utils;
-
-import java.util.List;
 
 /**
  * Author:wbGuo

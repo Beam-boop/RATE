@@ -10,11 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07594db0-94f5-4427-b2e0-44226596cf8e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-3.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/result.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/result.csv" beforeDir="false" afterPath="$PROJECT_DIR$/result.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LocalRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LocalRun.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/rate/SecureCloudPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/SecureCloudPlatform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/CloudPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/CloudPlatform.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +54,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/SC-xidian/SC-Beam/RATE/res/T-Drive&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/SC_Beam/NSGA-II&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -62,7 +62,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15332031&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;rsyncConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -199,6 +199,10 @@
       <workItem from="1709084496556" duration="37000" />
       <workItem from="1710557368419" duration="1198000" />
       <workItem from="1710830015961" duration="7000" />
+      <workItem from="1715392124657" duration="553000" />
+      <workItem from="1715823684793" duration="634000" />
+      <workItem from="1715859490448" duration="2921000" />
+      <workItem from="1716086145116" duration="10968000" />
     </task>
     <servers />
   </component>
@@ -224,8 +228,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/rate/SecureCloudPlatform.java</url>
-          <line>119</line>
+          <line>132</line>
           <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/contrastexperiment/dp/CloudPlatform.java</url>
+          <line>128</line>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

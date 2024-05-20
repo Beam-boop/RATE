@@ -90,37 +90,12 @@ public class CloudPlatform {
 
 
     /**
-     * Dynamic programming solves the 0-1 knapsack problem
+     * Dynamic programming solves the 0-1 knapsack problem(dp)
      * in plaint text
      *
      * @return dp Array
      */
-    public int dpCalculate() {
-//        for (int i = 0; i < numOfThings; i++) {
-//            int w = goods.get(i).weight, v = goods.get(i).value;
-//            for (int j = capOfPack; j >= w; j--) {
-//                int temp = dp[j - w] + v;
-//                if (temp > dp[j]) {
-//                    dp[j] = temp;
-//                }
-//            }
-//        }
-        for (int i = 1; i <= numOfThings; i++) {
-            int w = goods.get(i - 1).weight, v = goods.get(i - 1).value;
-            for (int j = 1; j <= capOfPack; j++) {
-                if (j < w) {
-                    dp[i][j] = dp[i - 1][j];
-                } else {
-                    int temp = dp[i - 1][j - w] + v;
-                    dp[i][j] = Math.max(temp, dp[i - 1][j]);
-                }
-            }
-        }
-        System.out.println("TR benefit is :" + (dp[numOfThings][capOfPack] - capOfPack));
-        return dp[numOfThings][capOfPack] - capOfPack;
-    }
-
-    public void resultCalculate() {
+    public void dpCalculate() {
         for (int i = 0; i <= numOfThings; i++) {
             for (int j = 0; j <= capOfPack; j++) {
                 if (i == 0 || j == 0) {
@@ -148,27 +123,37 @@ public class CloudPlatform {
         System.out.println("avgCost is: " + avgCost);
     }
 
-    public int chooseItems() {
-        int[] selectTps = new int[numOfThings];
-        int j = capOfPack;
-        for (int i = numOfThings; i > 0; i--) {
-            int w = goods.get(i - 1).weight;
-            if (j - w < 0) {
-                continue;
+    public void BBOM() {
+        double totalResult = 0;
+        int totalWeight = 0;
+        List<Integer> selectedWorkers = new ArrayList<>();
+        while (true) {
+            double maxResult = 0;
+            int maxIndex = 0;
+            for (int i = 0; i < numOfThings; i++) {
+                if (selectedWorkers.contains(i)) {
+                    continue;
+                }
+                double temp = goods.get(i).value - avgCost;
+                if (temp > maxResult && totalWeight + goods.get(i).weight <= capOfPack) {
+                    maxResult = temp;
+                    maxIndex = i;
+                }
             }
-            if (dp[i][j] > dp[i - 1][j]) {
-                selectTps[i - 1] = 1;
-                j -= w;
+            if (maxResult > 0) {
+                selectedWorkers.add(maxIndex);
+                totalResult += maxResult;
+                totalWeight += goods.get(maxIndex).weight;
+            } else {
+                break;
             }
         }
-        int tpBenefit = 0;
-        for (int i = 0; i < selectTps.length; i++) {
-            if (selectTps[i] == 1) {
-                tpBenefit += goods.get(i).weight;
-            }
-        }
-        System.out.println("TPs benefit is:" + tpBenefit);
-        return tpBenefit;
+        participantsWelfare = capOfPack - selectedWorkers.size() * avgCost;
+        requesterRevenue = (int) Math.round(totalResult + selectedWorkers.size() * avgCost) - capOfPack;
+        System.out.println("requesterRevenue is: " + requesterRevenue);
+        System.out.println("participantsWelfare is: " + participantsWelfare);
+        System.out.println("chosen TPs are: " + selectedWorkers.size());
+        System.out.println("avgCost is: " + avgCost);
     }
 
     private void calculateAvgCost() {
@@ -183,7 +168,7 @@ public class CloudPlatform {
     public Number[] solve() throws ExecutionException, InterruptedException {
         calculateServiceTime();
         calculateAvgCost();
-        resultCalculate();
+        BBOM();
         return new Number[]{numOfParticipants, capOfPack, participantsWelfare, requesterRevenue};
     }
 }
