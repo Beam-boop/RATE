@@ -11,10 +11,17 @@
   <component name="ChangeListManager">
     <list default="true" id="07594db0-94f5-4427-b2e0-44226596cf8e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/T-Drive/T-Drive-10-new.csv" beforeDir="false" afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-10-new.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/T-Drive/T-Drive-100-new.csv" beforeDir="false" afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-100-new.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/T-Drive/T-Drive-20-new.csv" beforeDir="false" afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-20-new.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/T-Drive/T-Drive-40-new.csv" beforeDir="false" afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-40-new.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/T-Drive/T-Drive-50-new.csv" beforeDir="false" afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-50-new.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/T-Drive/T-Drive-70-new.csv" beforeDir="false" afterPath="$PROJECT_DIR$/res/T-Drive/T-Drive-70-new.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/result.csv" beforeDir="false" afterPath="$PROJECT_DIR$/result.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AvgTimeRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/AvgTimeRun.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LocalRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LocalRun.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/CloudPlatform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/CloudPlatform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/TaskParticipants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/contrastexperiment/dp/TaskParticipants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/rate/SecureTaskParticipants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/rate/SecureTaskParticipants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,29 +52,33 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/SC_Beam/NSGA-II&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15332031&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.LocalRun.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Acode/RATE/res/T-Drive",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15332031",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Acode\RATE\res\T-Drive" />
       <recent name="E:\SC-xidian\SC-Beam\RATE\res\T-Drive" />
       <recent name="E:\SC-xidian\SC-Beam\RATE\src\main" />
       <recent name="E:\SC-xidian\SC-Beam\RATE\src\main\java\contrastexperiment\dp" />
@@ -161,6 +172,13 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-1.8.0_402-corretto-1.8.0_402-4caba194b151-ae57be32" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -203,6 +221,7 @@
       <workItem from="1715823684793" duration="634000" />
       <workItem from="1715859490448" duration="2921000" />
       <workItem from="1716086145116" duration="10968000" />
+      <workItem from="1716171512238" duration="32303000" />
     </task>
     <servers />
   </component>
@@ -233,8 +252,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/contrastexperiment/dp/CloudPlatform.java</url>
-          <line>128</line>
+          <line>118</line>
           <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/contrastexperiment/dp/CloudPlatform.java</url>
+          <line>235</line>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

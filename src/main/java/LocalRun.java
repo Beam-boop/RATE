@@ -15,7 +15,6 @@ public class LocalRun {
         String filenameItem = "res/T-Drive/T-Drive-";
         String filenameInfo = "res/T-Drive/T-Drive-info.csv";
         double[] alphaArr = new double[]{1, 2, 3, 4, 5};
-        int[] velArr = new int[]{1, 2, 4, 5, 11, 22};
         int[] numArr = new int[]{10, 20, 40, 50, 70, 100};
         int[] keyArr = new int[]{128, 512, 768, 1024, 1280};
         int taskTime = 600;
@@ -31,7 +30,7 @@ public class LocalRun {
                         //set TP and TR
                         SecureTaskRequester tr = new SecureTaskRequester(b, taskTime, keyArr[k], filenameInfo);
                         long oneTime = System.currentTimeMillis();
-                        SecureTaskParticipants tp = new SecureTaskParticipants(velArr, filenameItem + numArr[i] + "-new.csv", true);
+                        SecureTaskParticipants tp = new SecureTaskParticipants(filenameItem + numArr[i] + "-new.csv", true);
                         long twoTime = System.currentTimeMillis();
                         //set CP and CSP
                         SecureCloudPlatform cp = new SecureCloudPlatform(alphaArr[n], tr, tp);
@@ -55,7 +54,7 @@ public class LocalRun {
                     //set TP and TR
                     TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
                     long oneTime = System.currentTimeMillis();
-                    TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + "-new.csv", false);
+                    TaskParticipants tp = new TaskParticipants(filenameItem + numArr[i] + "-new.csv");
                     long twoTime = System.currentTimeMillis();
                     //set CP and CSP
                     CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
@@ -77,7 +76,7 @@ public class LocalRun {
                     //set TP and TR
                     TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
                     long oneTime = System.currentTimeMillis();
-                    TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + "-new.csv", false);
+                    TaskParticipants tp = new TaskParticipants(filenameItem + numArr[i] + "-new.csv");
                     long twoTime = System.currentTimeMillis();
                     //set CP and CSP
                     CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
@@ -100,7 +99,7 @@ public class LocalRun {
                     //set TP and TR
                     TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
                     long oneTime = System.currentTimeMillis();
-                    TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + "-new.csv", false);
+                    TaskParticipants tp = new TaskParticipants(filenameItem + numArr[i] + "-new.csv");
                     long twoTime = System.currentTimeMillis();
                     //set CP and CSP
                     CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
@@ -161,25 +160,25 @@ public class LocalRun {
         //keylen=128
         int[] keyIndex = new int[]{0, 1};
 
-        System.out.println("------------------------------------ratio alpha--------------------------------------");
+//        System.out.println("------------------------------------ratio alpha--------------------------------------");
         int[] alphaIndex = new int[]{0, 5};
         int[] budgetTDrive = new int[]{2000, 2000, 1};
         int[] numIndex = new int[]{0, 1};
-
-
-        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
+//
+//
+//        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
 
         //beta/alpha 1.0
         //vel=1,2,4,5,11,22 B=500
         //rate dp ga
         //keylen=128
-        System.out.println("------------------------------------worker number n--------------------------------------");
-        alphaIndex = new int[]{0, 1};
-        budgetTDrive = new int[]{2000, 2000, 1};
-        int[] budgetKnap = new int[]{997, 997, 1};
-        numIndex = new int[]{0, 6};
+//        System.out.println("------------------------------------worker number n--------------------------------------");
+//        alphaIndex = new int[]{0, 1};
+//        budgetTDrive = new int[]{2000, 2000, 1};
+//        int[] budgetKnap = new int[]{997, 997, 1};
+//        numIndex = new int[]{0, 6};
 
-        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
+//        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
 //        runKanp(budgetKnap, velIndex, keyIndex);
 
         //beta/alpha 1.0
@@ -189,7 +188,7 @@ public class LocalRun {
         System.out.println("------------------------------------Budget B--------------------------------------");
         alphaIndex = new int[]{0, 1};
         budgetTDrive = new int[]{1000, 4000, 500};
-        numIndex = new int[]{3, 4};
+        numIndex = new int[]{5, 6};
 
         runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
 //        runKanp(budgetTDrive, velIndex, keyIndex);
@@ -198,12 +197,12 @@ public class LocalRun {
         //vel=22 B=500, 500, 1
         //rate dp ga
         //keylen=512, 768, 1024, 1280
-        System.out.println("------------------------------------keyLen K--------------------------------------");
-        alphaIndex = new int[]{0, 1};
-        budgetTDrive = new int[]{2000, 2000, 1};
-        keyIndex = new int[]{1, 5};
-        numIndex = new int[]{4, 5};
+//        System.out.println("------------------------------------keyLen K--------------------------------------");
+//        alphaIndex = new int[]{0, 1};
+//        budgetTDrive = new int[]{2000, 2000, 1};
+//        keyIndex = new int[]{1, 5};
+//        numIndex = new int[]{4, 5};
 
-        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
+//        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
     }
 }

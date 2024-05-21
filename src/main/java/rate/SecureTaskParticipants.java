@@ -42,25 +42,17 @@ public class SecureTaskParticipants {
      */
     protected List<List<BigInteger>> eStartLocs = new ArrayList<>();
     protected List<BigInteger> eCost = new ArrayList<>();
-    public List<Integer> vel;
+    public List<Integer> vel = new ArrayList<>();
     private static final int NUMBER = 111000;
     String pathItem = null;
-    public List<BigInteger> eVel;
+    public List<BigInteger> eVel = new ArrayList<>();
 
     public SecureTaskParticipants() {
 
     }
 
-    public SecureTaskParticipants(int[] v, String p, boolean encrypt) throws ExecutionException, InterruptedException {
-        
-        vel = new ArrayList<>();
-        eVel = new ArrayList<>();
-        // choose the vel randomly
-        Random ran = new Random(25);
-        for (int i = 0; i < 100; i++) {
-            int vr = ran.nextInt(6);
-            vel.add(v[vr]);
-        }
+    public SecureTaskParticipants(String p, boolean encrypt) throws ExecutionException, InterruptedException {
+
         pathItem = p;
 
         readData();
@@ -117,6 +109,7 @@ public class SecureTaskParticipants {
                 startLocs.add(startLoc);
                 costs.add(Integer.valueOf(line[3]));
                 payments.add(Integer.valueOf(line[4]));
+                vel.add(Integer.valueOf(line[5]));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -27,7 +27,7 @@ public class TaskParticipants {
      */
     protected List<List<Integer>> startLocs = new ArrayList<>();
 
-    public List<Integer> vel;
+    public List<Integer> vel = new ArrayList<>();
     private static final int NUMBER = 111000;
     String pathItem = null;
 
@@ -39,11 +39,8 @@ public class TaskParticipants {
 
     }
 
-    public TaskParticipants(int[] v, String p, boolean encrypt) throws ExecutionException, InterruptedException {
-        SecureTaskParticipants secureTaskParticipants = new SecureTaskParticipants(v, p, encrypt);
-        vel = secureTaskParticipants.vel;
+    public TaskParticipants(String p) throws ExecutionException, InterruptedException {
         pathItem = p;
-
         readData();
     }
 
@@ -62,6 +59,7 @@ public class TaskParticipants {
                 startLocs.add(startLoc);
                 costs.add(Integer.valueOf(line[3]));
                 payments.add(Integer.valueOf(line[4]));
+                vel.add(Integer.valueOf(line[5]));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

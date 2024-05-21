@@ -45,7 +45,7 @@ public class AvgTimeRun {
                                 //set TP and TR
                                 SecureTaskRequester tr = new SecureTaskRequester(b, taskTime, keyArr[k], filenameInfo);
                                 long oneTime = System.currentTimeMillis();
-                                SecureTaskParticipants tp = new SecureTaskParticipants(velArr, filenameItem + numArr[i] + ".csv", true);
+                                SecureTaskParticipants tp = new SecureTaskParticipants(filenameItem + numArr[i] + ".csv", true);
                                 long twoTime = System.currentTimeMillis();
                                 //set CP and CSP
                                 SecureCloudPlatform cp = new SecureCloudPlatform(alphaArr[n], tr, tp);
@@ -80,7 +80,7 @@ public class AvgTimeRun {
                             long startTime = System.currentTimeMillis();
                             //set TP and TR
                             TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
-                            TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv", false);
+                            TaskParticipants tp = new TaskParticipants(filenameItem + numArr[i] + ".csv");
                             //set CP and CSP
                             CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
                             Number[] message = cp.solveDp();
@@ -106,7 +106,7 @@ public class AvgTimeRun {
                         int[] time = new int[10];
                         int totalTime = 0;
                         TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
-                        TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv", false);
+                        TaskParticipants tp = new TaskParticipants(filenameItem + numArr[i] + ".csv");
                         //set CP and CSP
                         CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
                         List<Integer> serveTimes = cp.calculateServiceTime();
