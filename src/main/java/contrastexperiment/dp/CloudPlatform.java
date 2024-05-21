@@ -1,11 +1,26 @@
 package contrastexperiment.dp;
 
+import org.uma.jmetal.algorithm.Algorithm;
+import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
+import org.uma.jmetal.operator.CrossoverOperator;
+import org.uma.jmetal.operator.MutationOperator;
+import org.uma.jmetal.operator.impl.crossover.SinglePointCrossover;
+import org.uma.jmetal.operator.impl.mutation.BitFlipMutation;
+import org.uma.jmetal.operator.impl.selection.BinaryTournamentSelection;
+import org.uma.jmetal.problem.BinaryProblem;
+import org.uma.jmetal.problem.Problem;
+import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.util.AlgorithmRunner;
+import org.uma.jmetal.util.JMetalLogger;
+import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import utils.sg.smu.securecom.utils.Good;
 import utils.sg.smu.securecom.utils.Solution;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import static org.uma.jmetal.util.AbstractAlgorithmRunner.printFinalSolutionSet;
 
 /**
  * Author:wbGuo, Paren
@@ -165,10 +180,69 @@ public class CloudPlatform {
     }
 
     //return numOfThings, capOfPack, requesterBenefit, workerBenefit, time, time - decryptTime[1], time - decryptTime[0], keyLen
-    public Number[] solve() throws ExecutionException, InterruptedException {
+    public Number[] solveDp() throws ExecutionException, InterruptedException {
+        calculateServiceTime();
+        calculateAvgCost();
+        dpCalculate();
+        return new Number[]{numOfParticipants, capOfPack, participantsWelfare, requesterRevenue};
+    }
+
+    public Number[] solveBBOM() throws ExecutionException, InterruptedException {
         calculateServiceTime();
         calculateAvgCost();
         BBOM();
         return new Number[]{numOfParticipants, capOfPack, participantsWelfare, requesterRevenue};
+    }
+
+    public Number[] solveNsga2() throws ExecutionException, InterruptedException {
+        calculateServiceTime();
+        calculateAvgCost();
+        NsgaNew();
+        return new Number[]{numOfParticipants, capOfPack, participantsWelfare, requesterRevenue};
+    }
+
+    private void NsgaNew() {
+        BinaryProblem nsgaProblem;
+        Algorithm<List<BinarySolution>> algorithm;
+        CrossoverOperator<BinarySolution> crossover;
+        MutationOperator<BinarySolution> mutation;
+
+        // 参数设置
+        double crossoverProbability = 0.8 ;
+        double mutationProbability = 0.15 ;
+        int populationSize = 150;
+
+        nsgaProblem = new NsgaProblem(numOfThings, numOfThings, goods, capOfPack);
+
+        //操作符创建
+        crossover = new SinglePointCrossover(crossoverProbability) ;
+        mutation = new BitFlipMutation(mutationProbability) ;
+
+        // 创建算法
+        algorithm = new NSGAIIBuilder<>(nsgaProblem, crossover, mutation)
+                .setSelectionOperator(new BinaryTournamentSelection<BinarySolution>(new RankingAndCrowdingDistanceComparator<BinarySolution>()))
+                .setMaxEvaluations(5000)
+                .setPopulationSize(populationSize)
+                .build() ;
+
+        // 运行算法
+        AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute() ;
+
+        List<BinarySolution> population = algorithm.getResult() ;
+        long computingTime = algorithmRunner.getComputingTime() ;
+
+//        JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+
+        int chosenWorkers = (int) (-population.get(population.size()-1).getObjective(1));
+
+        participantsWelfare = capOfPack - chosenWorkers * avgCost;
+        requesterRevenue = (int) (-(population.get(population.size()-1).getObjective(0)) - capOfPack);
+        System.out.println("requesterRevenue is: " + requesterRevenue);
+        System.out.println("participantsWelfare is: " + participantsWelfare);
+        System.out.println("chosen TPs are: " + chosenWorkers);
+        System.out.println("avgCost is: " + avgCost);
+
+//        printFinalSolutionSet(population);
+
     }
 }

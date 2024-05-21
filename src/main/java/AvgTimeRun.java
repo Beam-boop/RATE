@@ -83,7 +83,7 @@ public class AvgTimeRun {
                             TaskParticipants tp = new TaskParticipants(velArr, filenameItem + numArr[i] + ".csv", false);
                             //set CP and CSP
                             CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
-                            Number[] message = cp.solve();
+                            Number[] message = cp.solveDp();
                             long endTime = System.currentTimeMillis();
                             time[t] = (int) (endTime - startTime);
                             System.out.println("plaintext running time: " + time[t] + "ms");
