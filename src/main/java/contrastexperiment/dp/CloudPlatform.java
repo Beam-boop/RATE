@@ -94,6 +94,7 @@ public class CloudPlatform {
         }
 
         numOfThings = goods.size();
+        System.out.println("number of things " + numOfThings);
         System.out.println("number of TPs " + numOfParticipants);
         System.out.println("budget of task " + capOfPack);
 //        dp = new int[numOfThings + 1][capOfPack + 1];
@@ -208,35 +209,35 @@ public class CloudPlatform {
         MutationOperator<BinarySolution> mutation;
 
         // 参数设置
-        double crossoverProbability = 0.8 ;
-        double mutationProbability = 0.15 ;
+        double crossoverProbability = 0.8;
+        double mutationProbability = 0.15;
         int populationSize = 150;
 
         nsgaProblem = new NsgaProblem(numOfThings, numOfThings, goods, capOfPack);
 
         //操作符创建
-        crossover = new SinglePointCrossover(crossoverProbability) ;
-        mutation = new BitFlipMutation(mutationProbability) ;
+        crossover = new SinglePointCrossover(crossoverProbability);
+        mutation = new BitFlipMutation(mutationProbability);
 
         // 创建算法
         algorithm = new NSGAIIBuilder<>(nsgaProblem, crossover, mutation)
                 .setSelectionOperator(new BinaryTournamentSelection<BinarySolution>(new RankingAndCrowdingDistanceComparator<BinarySolution>()))
                 .setMaxEvaluations(5000)
                 .setPopulationSize(populationSize)
-                .build() ;
+                .build();
 
         // 运行算法
-        AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute() ;
+        AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
 
-        List<BinarySolution> population = algorithm.getResult() ;
-        long computingTime = algorithmRunner.getComputingTime() ;
+        List<BinarySolution> population = algorithm.getResult();
+        long computingTime = algorithmRunner.getComputingTime();
 
 //        JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
-        int chosenWorkers = (int) (-population.get(population.size()-1).getObjective(1));
+        int chosenWorkers = (int) (-population.get(population.size() - 1).getObjective(1));
 
         participantsWelfare = capOfPack - chosenWorkers * avgCost;
-        requesterRevenue = (int) (-(population.get(population.size()-1).getObjective(0)) - capOfPack);
+        requesterRevenue = (int) (-(population.get(population.size() - 1).getObjective(0)) - capOfPack);
         System.out.println("requesterRevenue is: " + requesterRevenue);
         System.out.println("participantsWelfare is: " + participantsWelfare);
         System.out.println("chosen TPs are: " + chosenWorkers);

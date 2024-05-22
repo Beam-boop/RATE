@@ -166,19 +166,19 @@ public class LocalRun {
         int[] numIndex = new int[]{0, 1};
 //
 //
-//        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
+        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
 
         //beta/alpha 1.0
         //vel=1,2,4,5,11,22 B=500
         //rate dp ga
         //keylen=128
-//        System.out.println("------------------------------------worker number n--------------------------------------");
-//        alphaIndex = new int[]{0, 1};
-//        budgetTDrive = new int[]{2000, 2000, 1};
-//        int[] budgetKnap = new int[]{997, 997, 1};
-//        numIndex = new int[]{0, 6};
+        System.out.println("------------------------------------worker number n--------------------------------------");
+        alphaIndex = new int[]{0, 1};
+        budgetTDrive = new int[]{2000, 2000, 1};
+        int[] budgetKnap = new int[]{997, 997, 1};
+        numIndex = new int[]{0, 6};
 
-//        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
+        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
 //        runKanp(budgetKnap, velIndex, keyIndex);
 
         //beta/alpha 1.0
@@ -197,12 +197,12 @@ public class LocalRun {
         //vel=22 B=500, 500, 1
         //rate dp ga
         //keylen=512, 768, 1024, 1280
-//        System.out.println("------------------------------------keyLen K--------------------------------------");
-//        alphaIndex = new int[]{0, 1};
-//        budgetTDrive = new int[]{2000, 2000, 1};
-//        keyIndex = new int[]{1, 5};
-//        numIndex = new int[]{4, 5};
+        System.out.println("------------------------------------keyLen K--------------------------------------");
+        alphaIndex = new int[]{0, 1};
+        budgetTDrive = new int[]{2000, 2000, 1};
+        keyIndex = new int[]{1, 5};
+        numIndex = new int[]{4, 5};
 
-//        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
+        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
     }
 }
