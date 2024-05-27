@@ -101,8 +101,9 @@ public class GeneticAlgorithm {
     public int sumWeight() {
         int sumtwo = 0;
         for (int i = 0; i < weight.length; i++) {
-            if (iterBestFit.gene[i])
+            if (iterBestFit.gene[i]) {
                 sumtwo += weight[i];
+            }
         }
         return sumtwo;
     }

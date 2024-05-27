@@ -1,5 +1,6 @@
 package contrastexperiment.dp;
 
+import contrastexperiment.ga.Reader;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.nsgaii.NSGAIIBuilder;
 import org.uma.jmetal.operator.CrossoverOperator;
@@ -78,20 +79,31 @@ public class CloudPlatform {
         System.out.println("alpha is: " + a);
     }
 
+    public CloudPlatform(int budget, int numOfWorkers) {
+        capOfPack = budget;
+        numOfThings = numOfWorkers;
+        goods = new ArrayList<>();
+    }
+
     //calculate the service time
     public List<Integer> calculateServiceTime() {
         for (int i = 0; i < startLocs.size(); i++) {
             int arrivalTime = (Math.abs(startLocs.get(i).get(0) - taskLoc.get(0)) + Math.abs(startLocs.get(i).get(1) - taskLoc.get(1))) / vel.get(i);
             int serviceTime = taskTime - arrivalTime;
-            if (serviceTime > 0) {
-                serviceTimes.add(serviceTime);
-            }
-
+            serviceTimes.add(serviceTime);
         }
-
+        List<Integer> weights = new ArrayList<>();
+        List<Integer> values = new ArrayList<>();
         for (int i = 0; i < serviceTimes.size(); i++) {
+            if (serviceTimes.get(i) <= 0) {
+                continue;
+            }
             goods.add(new Good(payments.get(i), (int) (serviceTimes.get(i) * alpha)));
+            weights.add(payments.get(i));
+            values.add((int) (serviceTimes.get(i) * alpha));
         }
+        System.out.println("weights: " + weights);
+        System.out.println("values: " + values);
 
         numOfThings = goods.size();
         System.out.println("number of things " + numOfThings);
@@ -111,7 +123,7 @@ public class CloudPlatform {
      *
      * @return dp Array
      */
-    public void dpCalculate() {
+    public void dpCalculate(String dataSet) {
         for (int i = 0; i <= numOfThings; i++) {
             for (int j = 0; j <= capOfPack; j++) {
                 if (i == 0 || j == 0) {
@@ -131,15 +143,21 @@ public class CloudPlatform {
                 }
             }
         }
-        requesterRevenue = dp2[numOfThings][capOfPack].totalValue - capOfPack;
-        participantsWelfare = capOfPack - dp2[numOfThings][capOfPack].itemCount * avgCost;
-        System.out.println("requesterRevenue is: " + requesterRevenue);
-        System.out.println("participantsWelfare is: " + participantsWelfare);
-        System.out.println("chosen TPs are: " + dp2[numOfThings][capOfPack].itemCount);
-        System.out.println("avgCost is: " + avgCost);
+        if ("Knap".equals(dataSet)) {
+            requesterRevenue = dp2[numOfThings][capOfPack].totalValue;
+            System.out.println("requesterRevenue is: " + requesterRevenue);
+            System.out.println("chosen TPs are: " + dp2[numOfThings][capOfPack].itemCount);
+        } else {
+            requesterRevenue = dp2[numOfThings][capOfPack].totalValue - capOfPack;
+            participantsWelfare = capOfPack - dp2[numOfThings][capOfPack].itemCount * avgCost;
+            System.out.println("requesterRevenue is: " + requesterRevenue);
+            System.out.println("participantsWelfare is: " + participantsWelfare);
+            System.out.println("chosen TPs are: " + dp2[numOfThings][capOfPack].itemCount);
+            System.out.println("avgCost is: " + avgCost);
+        }
     }
 
-    public void BBOM() {
+    public int BBOM(String dataSet) {
         double totalResult = 0;
         int totalWeight = 0;
         List<Integer> selectedWorkers = new ArrayList<>();
@@ -164,12 +182,19 @@ public class CloudPlatform {
                 break;
             }
         }
-        participantsWelfare = capOfPack - selectedWorkers.size() * avgCost;
-        requesterRevenue = (int) Math.round(totalResult + selectedWorkers.size() * avgCost) - capOfPack;
-        System.out.println("requesterRevenue is: " + requesterRevenue);
-        System.out.println("participantsWelfare is: " + participantsWelfare);
-        System.out.println("chosen TPs are: " + selectedWorkers.size());
-        System.out.println("avgCost is: " + avgCost);
+        if ("Knap".equals(dataSet)) {
+            requesterRevenue = (int) Math.round(totalResult + selectedWorkers.size() * avgCost);
+            System.out.println("requesterRevenue is: " + requesterRevenue);
+            System.out.println("chosen TPs are: " + selectedWorkers.size());
+        } else {
+            participantsWelfare = capOfPack - selectedWorkers.size() * avgCost;
+            requesterRevenue = (int) Math.round(totalResult + selectedWorkers.size() * avgCost) - capOfPack;
+            System.out.println("requesterRevenue is: " + requesterRevenue);
+            System.out.println("participantsWelfare is: " + participantsWelfare);
+            System.out.println("chosen TPs are: " + selectedWorkers.size());
+            System.out.println("avgCost is: " + avgCost);
+        }
+        return selectedWorkers.size();
     }
 
     private void calculateAvgCost() {
@@ -184,25 +209,25 @@ public class CloudPlatform {
     public Number[] solveDp() throws ExecutionException, InterruptedException {
         calculateServiceTime();
         calculateAvgCost();
-        dpCalculate();
+        dpCalculate("TDrive");
         return new Number[]{numOfParticipants, capOfPack, participantsWelfare, requesterRevenue};
     }
 
     public Number[] solveBBOM() throws ExecutionException, InterruptedException {
         calculateServiceTime();
         calculateAvgCost();
-        BBOM();
+        BBOM("TDrive");
         return new Number[]{numOfParticipants, capOfPack, participantsWelfare, requesterRevenue};
     }
 
     public Number[] solveNsga2() throws ExecutionException, InterruptedException {
         calculateServiceTime();
         calculateAvgCost();
-        NsgaNew();
+        NsgaNew("TDrive");
         return new Number[]{numOfParticipants, capOfPack, participantsWelfare, requesterRevenue};
     }
 
-    private void NsgaNew() {
+    private int NsgaNew(String dataSet) {
         BinaryProblem nsgaProblem;
         Algorithm<List<BinarySolution>> algorithm;
         CrossoverOperator<BinarySolution> crossover;
@@ -234,16 +259,43 @@ public class CloudPlatform {
 
 //        JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 
-        int chosenWorkers = (int) (-population.get(population.size() - 1).getObjective(1));
+        int chosenWorkers = -(int) (population.get(population.size() - 1).getObjective(1));
 
-        participantsWelfare = capOfPack - chosenWorkers * avgCost;
-        requesterRevenue = (int) (-(population.get(population.size() - 1).getObjective(0)) - capOfPack);
-        System.out.println("requesterRevenue is: " + requesterRevenue);
-        System.out.println("participantsWelfare is: " + participantsWelfare);
-        System.out.println("chosen TPs are: " + chosenWorkers);
-        System.out.println("avgCost is: " + avgCost);
+        if ("Knap".equals(dataSet)) {
+            requesterRevenue = (int) (-(population.get(population.size() - 1).getObjective(0)));
+            System.out.println("requesterRevenue is: " + requesterRevenue);
+            System.out.println("chosen TPs are: " + chosenWorkers);
+        } else {
+            participantsWelfare = capOfPack - chosenWorkers * avgCost;
+            requesterRevenue = (int) (-(population.get(population.size() - 1).getObjective(0)) - capOfPack);
+            System.out.println("requesterRevenue is: " + requesterRevenue);
+            System.out.println("participantsWelfare is: " + participantsWelfare);
+            System.out.println("chosen TPs are: " + chosenWorkers);
+            System.out.println("avgCost is: " + avgCost);
+        }
+        return chosenWorkers;
 
-//        printFinalSolutionSet(population);
+    }
 
+    /**
+     * @param solution: DP, BBOM, NSGA2
+     * @return
+     */
+    public int[] solveKnap(String solution, String filenameString) {
+        List<double[]> items = Reader.readKnap(filenameString);
+        int selectedWorkerSize = 0;
+        for (int i = 0; i < numOfThings; i++) {
+            goods.add(new Good((int) items.get(0)[i], (int) items.get(1)[i]));
+        }
+        if (solution.equals("DP")) {
+            dp2 = new Solution[numOfThings + 1][capOfPack + 1];
+            dpCalculate("Knap");
+            selectedWorkerSize = dp2[numOfThings][capOfPack].itemCount;
+        } else if (solution.equals("BBOM")) {
+            selectedWorkerSize = BBOM("Knap");
+        } else if (solution.equals("NSGA2")) {
+            selectedWorkerSize = NsgaNew("Knap");
+        }
+        return new int[]{numOfParticipants, capOfPack, requesterRevenue, selectedWorkerSize};
     }
 }

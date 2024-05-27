@@ -1,6 +1,7 @@
 import contrastexperiment.dp.CloudPlatform;
 import contrastexperiment.dp.TaskParticipants;
 import contrastexperiment.dp.TaskRequester;
+import contrastexperiment.ga.Reader;
 import rate.SecureCloudPlatform;
 import rate.SecureTaskParticipants;
 import rate.SecureTaskRequester;
@@ -153,6 +154,49 @@ public class LocalRun {
 //        Utils.Text2csv();
     }
 
+    public static void runKnap(int[] budget, int[] numIndex) throws Exception {
+        String filenameItem = "res/archive/knapPI_14_200_1000_1_items.csv";
+        int[] numArr = new int[]{10, 20, 40, 100, 140, 200};
+        Utils.csvHead();
+        //rate
+        System.out.println("-------------------Knapsack--------------------");
+        System.out.println("-------------------dp--------------------");
+        for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+            for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                CloudPlatform cp = new CloudPlatform(b, numArr[i]);
+                int[] message = cp.solveKnap("DP", filenameItem);
+                System.out.println("------------------------------------------");
+                Utils.writeResultToCsv("Knapsack", "dp", 0, message[0],
+                        message[1], message[2], message[3], 0, 0, 0, 0);
+            }
+        }
+        Utils.Text2csv();
+
+        System.out.println("---------------------------BBOM-------------------------");
+        for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+            for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                CloudPlatform cp = new CloudPlatform(b, numArr[i]);
+                int[] message = cp.solveKnap("BBOM", filenameItem);
+                System.out.println("------------------------------------------");
+                Utils.writeResultToCsv("Knapsack", "BBOM", 0, message[0],
+                        message[1], message[2], message[3], 0, 0, 0, 0);
+
+            }
+        }
+        Utils.Text2csv();
+
+        for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+            for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                CloudPlatform cp = new CloudPlatform(b, numArr[i]);
+                int[] message = cp.solveKnap("NSGA2", filenameItem);
+                System.out.println("------------------------------------------");
+                Utils.writeResultToCsv("Knapsack", "NSGAII", 0, message[0],
+                        message[1], message[2], message[3], 0, 0, 0, 0);
+
+            }
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         //alpha 1 2 3 4 5
         //vel=22 B=500
@@ -160,12 +204,10 @@ public class LocalRun {
         //keylen=128
         int[] keyIndex = new int[]{0, 1};
 
-//        System.out.println("------------------------------------ratio alpha--------------------------------------");
+        System.out.println("------------------------------------ratio alpha--------------------------------------");
         int[] alphaIndex = new int[]{0, 5};
-        int[] budgetTDrive = new int[]{2000, 2000, 1};
+        int[] budgetTDrive = new int[]{720, 720, 1};
         int[] numIndex = new int[]{0, 1};
-//
-//
         runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
 
         //beta/alpha 1.0
@@ -174,12 +216,13 @@ public class LocalRun {
         //keylen=128
         System.out.println("------------------------------------worker number n--------------------------------------");
         alphaIndex = new int[]{0, 1};
-        budgetTDrive = new int[]{2000, 2000, 1};
+        budgetTDrive = new int[]{1500, 1500, 1};
         int[] budgetKnap = new int[]{997, 997, 1};
         numIndex = new int[]{0, 6};
 
         runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
-//        runKanp(budgetKnap, velIndex, keyIndex);
+        runKnap(budgetKnap, numIndex);
+
 
         //beta/alpha 1.0
         //vel=22 B=100,1000,100
@@ -187,22 +230,24 @@ public class LocalRun {
         //keylen=128
         System.out.println("------------------------------------Budget B--------------------------------------");
         alphaIndex = new int[]{0, 1};
-        budgetTDrive = new int[]{1000, 4000, 500};
-        numIndex = new int[]{5, 6};
+        budgetTDrive = new int[]{1000, 3400, 300};
+        budgetKnap = new int[]{200, 1000, 200};
+        numIndex = new int[]{3, 4};
+        int[] numKnap = new int[]{5, 6};
 
         runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
-//        runKanp(budgetTDrive, velIndex, keyIndex);
+        runKnap(budgetKnap, numKnap);
 
         //beta/alpha 1.0
         //vel=22 B=500, 500, 1
         //rate dp ga
         //keylen=512, 768, 1024, 1280
-        System.out.println("------------------------------------keyLen K--------------------------------------");
-        alphaIndex = new int[]{0, 1};
-        budgetTDrive = new int[]{2000, 2000, 1};
-        keyIndex = new int[]{1, 5};
-        numIndex = new int[]{4, 5};
-
-        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
+//        System.out.println("------------------------------------keyLen K--------------------------------------");
+//        alphaIndex = new int[]{0, 1};
+//        budgetTDrive = new int[]{2000, 2000, 1};
+//        keyIndex = new int[]{1, 5};
+//        numIndex = new int[]{4, 5};
+//
+//        runTDrive(alphaIndex, budgetTDrive, keyIndex, numIndex);
     }
 }

@@ -108,7 +108,7 @@ public class Utils {
         writeText.append(resultMap.get("number") + ',');
         writeText.append(resultMap.get("B") + ',');
         writeText.append(resultMap.get("TR benefit") + ',');
-        writeText.append(resultMap.get("TPs benefit") + ',');
+        writeText.append(resultMap.get("TPs welfare") + ',');
         writeText.append(resultMap.get("TR time") + ',');
         writeText.append(resultMap.get("TPs time") + ',');
         writeText.append(resultMap.get("cp time") + ',');

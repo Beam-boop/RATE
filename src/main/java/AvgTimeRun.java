@@ -19,8 +19,6 @@ public class AvgTimeRun {
         String filenameItem = "res/T-Drive/T-Drive-";
         String filenameInfo = "res/T-Drive/T-Drive-info.csv";
         double[] alphaArr = new double[]{1};
-        double[] betaArr = new double[]{0.2, 0.4, 0.6, 0.8, 1.0};
-        int[] velArr = new int[]{1, 2, 4, 5, 11, 22};
         int[] numArr = new int[]{10, 20, 40, 50, 70, 100};
         int[] keyArr = new int[]{128, 512, 768, 1024, 1280};
         int taskTime = 600;
@@ -34,32 +32,30 @@ public class AvgTimeRun {
         List<int[]> listCp = new ArrayList<>();
         for (int k = keyIndex[0]; k < keyIndex[1]; k++) {
             for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
-                for (int m = betaIndex[0]; m < betaIndex[1]; m++) {
-                    for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
-                        for (int i = numIndex[0]; i < numIndex[1]; i++) {
-                            int[] requesterTime = new int[10];
-                            int[] workerTime = new int[10];
-                            int[] cpTime = new int[10];
-                            for (int t = 0; t < 10; t++) {
-                                long startTime = System.currentTimeMillis();
-                                //set TP and TR
-                                SecureTaskRequester tr = new SecureTaskRequester(b, taskTime, keyArr[k], filenameInfo);
-                                long oneTime = System.currentTimeMillis();
-                                SecureTaskParticipants tp = new SecureTaskParticipants(filenameItem + numArr[i] + ".csv", true);
-                                long twoTime = System.currentTimeMillis();
-                                //set CP and CSP
-                                SecureCloudPlatform cp = new SecureCloudPlatform(alphaArr[n], tr, tp);
-                                Number[] message = cp.solve();
-                                long endTime = System.currentTimeMillis();
-                                System.out.println("------------------------------------------");
-                                requesterTime[t] = (int) (endTime - startTime);
-                                workerTime[t] = (int) (twoTime - oneTime) ;
-                                cpTime[t] = (int) (endTime - twoTime);
-                            }
-                            listRequester.add(requesterTime);
-                            listWorker.add(workerTime);
-                            listCp.add(cpTime);
+                for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+                    for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                        int[] requesterTime = new int[10];
+                        int[] workerTime = new int[10];
+                        int[] cpTime = new int[10];
+                        for (int t = 0; t < 10; t++) {
+                            long startTime = System.currentTimeMillis();
+                            //set TP and TR
+                            SecureTaskRequester tr = new SecureTaskRequester(b, taskTime, keyArr[k], filenameInfo);
+                            long oneTime = System.currentTimeMillis();
+                            SecureTaskParticipants tp = new SecureTaskParticipants(filenameItem + numArr[i] + ".csv", true);
+                            long twoTime = System.currentTimeMillis();
+                            //set CP and CSP
+                            SecureCloudPlatform cp = new SecureCloudPlatform(alphaArr[n], tr, tp);
+                            cp.solve();
+                            long endTime = System.currentTimeMillis();
+                            System.out.println("------------------------------------------");
+                            requesterTime[t] = (int) (endTime - startTime);
+                            workerTime[t] = (int) (twoTime - oneTime);
+                            cpTime[t] = (int) (endTime - twoTime);
                         }
+                        listRequester.add(requesterTime);
+                        listWorker.add(workerTime);
+                        listCp.add(cpTime);
                     }
                 }
             }
@@ -72,68 +68,143 @@ public class AvgTimeRun {
         System.out.println("---------------------------DP-------------------------");
         List<int[]> timeList1 = new ArrayList<>();
         for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
-            for (int m = betaIndex[0]; m < betaIndex[1]; m++) {
-                for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
-                    for (int i = numIndex[0]; i < numIndex[1]; i++) {
-                        int[] time = new int[10];
-                        for (int t = 0; t < 10; t++) {
-                            long startTime = System.currentTimeMillis();
-                            //set TP and TR
-                            TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
-                            TaskParticipants tp = new TaskParticipants(filenameItem + numArr[i] + ".csv");
-                            //set CP and CSP
-                            CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
-                            Number[] message = cp.solveDp();
-                            long endTime = System.currentTimeMillis();
-                            time[t] = (int) (endTime - startTime);
-                            System.out.println("plaintext running time: " + time[t] + "ms");
-                        }
-                        timeList1.add(time);
+            for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+                for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                    int[] time = new int[10];
+                    for (int t = 0; t < 10; t++) {
+                        long startTime = System.currentTimeMillis();
+                        //set TP and TR
+                        TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
+                        TaskParticipants tp = new TaskParticipants(filenameItem + numArr[i] + ".csv");
+                        //set CP and CSP
+                        CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
+                        Number[] message = cp.solveDp();
+                        long endTime = System.currentTimeMillis();
+                        time[t] = (int) (endTime - startTime);
+                        System.out.println("plaintext running time: " + time[t] + "ms");
                     }
+                    timeList1.add(time);
                 }
             }
         }
         Utils.writeTimeToCsv(timeList1);
         Utils.Text2csv();
 
-        System.out.println("-------------------GA--------------------");
-        List<int[]> timeList = new ArrayList<>();
-
+        System.out.println("---------------------------BBOM-------------------------");
+        List<int[]> timeList2 = new ArrayList<>();
         for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
-            for (int m = betaIndex[0]; m < betaIndex[1]; m++) {
-                for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
-                    for (int i = numIndex[0]; i < numIndex[1]; i++) {
-                        int[] time = new int[10];
-                        int totalTime = 0;
+            for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+                for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                    int[] time = new int[10];
+                    for (int t = 0; t < 10; t++) {
+                        long startTime = System.currentTimeMillis();
+                        //set TP and TR
                         TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
                         TaskParticipants tp = new TaskParticipants(filenameItem + numArr[i] + ".csv");
                         //set CP and CSP
                         CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
-                        List<Integer> serveTimes = cp.calculateServiceTime();
-                        int numOfParticipants = cp.numOfParticipants;
-                        int numOfThing = serveTimes.size();
-                        int capOfPack = b;
-                        GeneticAlgorithm gaKnapsack = null;
-                        int requesterBenefit = 0;
-                        int workerBenefit = 0;
-                        for (int t = 0; t < 10; t++) {
-                            long startTime = System.currentTimeMillis();
-                            gaKnapsack = new GeneticAlgorithm(100, capOfPack, numOfThing, 5000, 0.5f, 0.01f, serveTimes, alphaArr[n], betaArr[m]);
-                            requesterBenefit = gaKnapsack.geneticAlgorithmProcess(0);
-                            workerBenefit = gaKnapsack.sumWeight();
-                            System.out.println("TPs benefit is:" + workerBenefit);
-                            long endTime = System.currentTimeMillis();
-                            time[t] = (int) (endTime - startTime);
-                            System.out.println("plaintext running time: " + time[t] + "ms");
-                        }
-                        timeList.add(time);
-                        System.out.println("----------------------------------------------------------------------");
+                        Number[] message = cp.solveBBOM();
+                        long endTime = System.currentTimeMillis();
+                        time[t] = (int) (endTime - startTime);
+                        System.out.println("plaintext running time: " + time[t] + "ms");
                     }
+                    timeList2.add(time);
                 }
             }
         }
-        Utils.writeTimeToCsv(timeList);
+        Utils.writeTimeToCsv(timeList1);
         Utils.Text2csv();
+
+        System.out.println("---------------------------BBOM-------------------------");
+        List<int[]> timeList3 = new ArrayList<>();
+        for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
+            for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+                for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                    int[] time = new int[10];
+                    for (int t = 0; t < 10; t++) {
+                        long startTime = System.currentTimeMillis();
+                        //set TP and TR
+                        TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
+                        TaskParticipants tp = new TaskParticipants(filenameItem + numArr[i] + ".csv");
+                        //set CP and CSP
+                        CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
+                        Number[] message = cp.solveBBOM();
+                        long endTime = System.currentTimeMillis();
+                        time[t] = (int) (endTime - startTime);
+                        System.out.println("plaintext running time: " + time[t] + "ms");
+                    }
+                    timeList3.add(time);
+                }
+            }
+        }
+        Utils.writeTimeToCsv(timeList1);
+        Utils.Text2csv();
+
+        System.out.println("---------------------------NSGAII-------------------------");
+        List<int[]> timeList4 = new ArrayList<>();
+        for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
+            for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+                for (int i = numIndex[0]; i < numIndex[1]; i++) {
+                    int[] time = new int[10];
+                    for (int t = 0; t < 10; t++) {
+                        long startTime = System.currentTimeMillis();
+                        //set TP and TR
+                        TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
+                        TaskParticipants tp = new TaskParticipants(filenameItem + numArr[i] + ".csv");
+                        //set CP and CSP
+                        CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
+                        Number[] message = cp.solveNsga2();
+                        long endTime = System.currentTimeMillis();
+                        time[t] = (int) (endTime - startTime);
+                        System.out.println("plaintext running time: " + time[t] + "ms");
+                    }
+                    timeList4.add(time);
+                }
+            }
+        }
+        Utils.writeTimeToCsv(timeList1);
+        Utils.Text2csv();
+
+
+
+//        System.out.println("-------------------GA--------------------");
+//        List<int[]> timeList = new ArrayList<>();
+//
+//        for (int n = alphaIndex[0]; n < alphaIndex[1]; n++) {
+//            for (int m = betaIndex[0]; m < betaIndex[1]; m++) {
+//                for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
+//                    for (int i = numIndex[0]; i < numIndex[1]; i++) {
+//                        int[] time = new int[10];
+//                        int totalTime = 0;
+//                        TaskRequester tr = new TaskRequester(b, taskTime, filenameInfo);
+//                        TaskParticipants tp = new TaskParticipants(filenameItem + numArr[i] + ".csv");
+//                        //set CP and CSP
+//                        CloudPlatform cp = new CloudPlatform(alphaArr[n], tr, tp);
+//                        List<Integer> serveTimes = cp.calculateServiceTime();
+//                        int numOfParticipants = cp.numOfParticipants;
+//                        int numOfThing = serveTimes.size();
+//                        int capOfPack = b;
+//                        GeneticAlgorithm gaKnapsack = null;
+//                        int requesterBenefit = 0;
+//                        int workerBenefit = 0;
+//                        for (int t = 0; t < 10; t++) {
+//                            long startTime = System.currentTimeMillis();
+//                            gaKnapsack = new GeneticAlgorithm(100, capOfPack, numOfThing, 5000, 0.5f, 0.01f, serveTimes, alphaArr[n], betaArr[m]);
+//                            requesterBenefit = gaKnapsack.geneticAlgorithmProcess(0);
+//                            workerBenefit = gaKnapsack.sumWeight();
+//                            System.out.println("TPs benefit is:" + workerBenefit);
+//                            long endTime = System.currentTimeMillis();
+//                            time[t] = (int) (endTime - startTime);
+//                            System.out.println("plaintext running time: " + time[t] + "ms");
+//                        }
+//                        timeList.add(time);
+//                        System.out.println("----------------------------------------------------------------------");
+//                    }
+//                }
+//            }
+//        }
+//        Utils.writeTimeToCsv(timeList);
+//        Utils.Text2csv();
     }
 
     public static void main(String[] args) throws Exception {
