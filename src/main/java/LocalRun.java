@@ -184,7 +184,7 @@ public class LocalRun {
             }
         }
         Utils.Text2csv();
-
+        System.out.println("---------------------------NSGAII-------------------------");
         for (int b = budget[0]; b <= budget[1]; b = b + budget[2]) {
             for (int i = numIndex[0]; i < numIndex[1]; i++) {
                 CloudPlatform cp = new CloudPlatform(b, numArr[i]);

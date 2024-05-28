@@ -148,14 +148,10 @@ public class SecureCloudPlatform {
             }
         }
         //decrypt service Times
-        List<Integer> values = new ArrayList<>();
         for (int i = 0; i < eServeTimes.size(); i++) {
             int serviceTimes = Integer.parseInt(String.valueOf(cp.finalDecrypt(cp.partyDecrypt(eServeTimes.get(i)), csp.partyDecrypt(eServeTimes.get(i)))));
             goods.add(new Good((payments.get(i)), ((int) (serviceTimes * alpha))));
-            values.add((int) (serviceTimes * alpha));
         }
-        System.out.println("weights: " + payments);
-        System.out.println("values: " + values);
 
         numOfThings = goods.size();
         System.out.println("number of TPs " + numberOfParticipants);

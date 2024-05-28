@@ -80,6 +80,7 @@ public class CloudPlatform {
     }
 
     public CloudPlatform(int budget, int numOfWorkers) {
+        avgCost = 10;
         capOfPack = budget;
         numOfThings = numOfWorkers;
         goods = new ArrayList<>();
@@ -123,7 +124,7 @@ public class CloudPlatform {
      *
      * @return dp Array
      */
-    public void dpCalculate(String dataSet) {
+    public void dpCalculate() {
         for (int i = 0; i <= numOfThings; i++) {
             for (int j = 0; j <= capOfPack; j++) {
                 if (i == 0 || j == 0) {
@@ -143,23 +144,17 @@ public class CloudPlatform {
                 }
             }
         }
-        if ("Knap".equals(dataSet)) {
-            requesterRevenue = dp2[numOfThings][capOfPack].totalValue;
-            System.out.println("requesterRevenue is: " + requesterRevenue);
-            System.out.println("chosen TPs are: " + dp2[numOfThings][capOfPack].itemCount);
-        } else {
-            requesterRevenue = dp2[numOfThings][capOfPack].totalValue - capOfPack;
-            participantsWelfare = capOfPack - dp2[numOfThings][capOfPack].itemCount * avgCost;
-            System.out.println("requesterRevenue is: " + requesterRevenue);
-            System.out.println("participantsWelfare is: " + participantsWelfare);
-            System.out.println("chosen TPs are: " + dp2[numOfThings][capOfPack].itemCount);
-            System.out.println("avgCost is: " + avgCost);
-        }
+        requesterRevenue = dp2[numOfThings][capOfPack].totalValue - capOfPack;
+        participantsWelfare = capOfPack - dp2[numOfThings][capOfPack].itemCount * avgCost;
+        System.out.println("requesterRevenue is: " + requesterRevenue);
+        System.out.println("participantsWelfare is: " + participantsWelfare);
+        System.out.println("chosen TPs are: " + dp2[numOfThings][capOfPack].itemCount);
+        System.out.println("avgCost is: " + avgCost);
     }
 
-    public int BBOM(String dataSet) {
-        double totalResult = 0;
+    public void BBOM() {
         int totalWeight = 0;
+        int totalValue = 0;
         List<Integer> selectedWorkers = new ArrayList<>();
         while (true) {
             double maxResult = 0;
@@ -168,7 +163,7 @@ public class CloudPlatform {
                 if (selectedWorkers.contains(i)) {
                     continue;
                 }
-                double temp = goods.get(i).value - avgCost;
+                double temp = (goods.get(i).value - avgCost)/goods.get(i).weight;
                 if (temp > maxResult && totalWeight + goods.get(i).weight <= capOfPack) {
                     maxResult = temp;
                     maxIndex = i;
@@ -176,25 +171,18 @@ public class CloudPlatform {
             }
             if (maxResult > 0) {
                 selectedWorkers.add(maxIndex);
-                totalResult += maxResult;
                 totalWeight += goods.get(maxIndex).weight;
+                totalValue += goods.get(maxIndex).value;
             } else {
                 break;
             }
         }
-        if ("Knap".equals(dataSet)) {
-            requesterRevenue = (int) Math.round(totalResult + selectedWorkers.size() * avgCost);
-            System.out.println("requesterRevenue is: " + requesterRevenue);
-            System.out.println("chosen TPs are: " + selectedWorkers.size());
-        } else {
-            participantsWelfare = capOfPack - selectedWorkers.size() * avgCost;
-            requesterRevenue = (int) Math.round(totalResult + selectedWorkers.size() * avgCost) - capOfPack;
-            System.out.println("requesterRevenue is: " + requesterRevenue);
-            System.out.println("participantsWelfare is: " + participantsWelfare);
-            System.out.println("chosen TPs are: " + selectedWorkers.size());
-            System.out.println("avgCost is: " + avgCost);
-        }
-        return selectedWorkers.size();
+        participantsWelfare = capOfPack - selectedWorkers.size() * avgCost;
+        requesterRevenue = totalValue  - capOfPack;
+        System.out.println("requesterRevenue is: " + requesterRevenue);
+        System.out.println("participantsWelfare is: " + participantsWelfare);
+        System.out.println("chosen TPs are: " + selectedWorkers.size());
+        System.out.println("avgCost is: " + avgCost);
     }
 
     private void calculateAvgCost() {
@@ -209,25 +197,25 @@ public class CloudPlatform {
     public Number[] solveDp() throws ExecutionException, InterruptedException {
         calculateServiceTime();
         calculateAvgCost();
-        dpCalculate("TDrive");
+        dpCalculate();
         return new Number[]{numOfParticipants, capOfPack, participantsWelfare, requesterRevenue};
     }
 
     public Number[] solveBBOM() throws ExecutionException, InterruptedException {
         calculateServiceTime();
         calculateAvgCost();
-        BBOM("TDrive");
+        BBOM();
         return new Number[]{numOfParticipants, capOfPack, participantsWelfare, requesterRevenue};
     }
 
     public Number[] solveNsga2() throws ExecutionException, InterruptedException {
         calculateServiceTime();
         calculateAvgCost();
-        NsgaNew("TDrive");
+        NsgaNew();
         return new Number[]{numOfParticipants, capOfPack, participantsWelfare, requesterRevenue};
     }
 
-    private int NsgaNew(String dataSet) {
+    private void NsgaNew() {
         BinaryProblem nsgaProblem;
         Algorithm<List<BinarySolution>> algorithm;
         CrossoverOperator<BinarySolution> crossover;
@@ -261,20 +249,12 @@ public class CloudPlatform {
 
         int chosenWorkers = -(int) (population.get(population.size() - 1).getObjective(1));
 
-        if ("Knap".equals(dataSet)) {
-            requesterRevenue = (int) (-(population.get(population.size() - 1).getObjective(0)));
-            System.out.println("requesterRevenue is: " + requesterRevenue);
-            System.out.println("chosen TPs are: " + chosenWorkers);
-        } else {
-            participantsWelfare = capOfPack - chosenWorkers * avgCost;
-            requesterRevenue = (int) (-(population.get(population.size() - 1).getObjective(0)) - capOfPack);
-            System.out.println("requesterRevenue is: " + requesterRevenue);
-            System.out.println("participantsWelfare is: " + participantsWelfare);
-            System.out.println("chosen TPs are: " + chosenWorkers);
-            System.out.println("avgCost is: " + avgCost);
-        }
-        return chosenWorkers;
-
+        participantsWelfare = capOfPack - chosenWorkers * avgCost;
+        requesterRevenue = (int) (-(population.get(population.size() - 1).getObjective(0)) - capOfPack);
+        System.out.println("requesterRevenue is: " + requesterRevenue);
+        System.out.println("participantsWelfare is: " + participantsWelfare);
+        System.out.println("chosen TPs are: " + chosenWorkers);
+        System.out.println("avgCost is: " + avgCost);
     }
 
     /**
@@ -283,19 +263,17 @@ public class CloudPlatform {
      */
     public int[] solveKnap(String solution, String filenameString) {
         List<double[]> items = Reader.readKnap(filenameString);
-        int selectedWorkerSize = 0;
         for (int i = 0; i < numOfThings; i++) {
             goods.add(new Good((int) items.get(0)[i], (int) items.get(1)[i]));
         }
         if (solution.equals("DP")) {
             dp2 = new Solution[numOfThings + 1][capOfPack + 1];
-            dpCalculate("Knap");
-            selectedWorkerSize = dp2[numOfThings][capOfPack].itemCount;
+            dpCalculate();
         } else if (solution.equals("BBOM")) {
-            selectedWorkerSize = BBOM("Knap");
+            BBOM();
         } else if (solution.equals("NSGA2")) {
-            selectedWorkerSize = NsgaNew("Knap");
+            NsgaNew();
         }
-        return new int[]{numOfParticipants, capOfPack, requesterRevenue, selectedWorkerSize};
+        return new int[]{numOfThings, capOfPack, (int) participantsWelfare, requesterRevenue};
     }
 }
